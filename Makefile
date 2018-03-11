@@ -3,7 +3,7 @@ EXE: main.o Tren.o Invisible.o Bombas.o Escenario.o Item.o Jugador.o  Espina.o V
 	g++ main.o Tren.o Invisible.o Bombas.o Escenario.o Item.o Jugador.o  Espina.o V.o -o EXE -lncurses
 
 #main
-main.o: main.cpp Bombas.h  Espina.h Jugador.h V.h Item.h Escenario.h Tren.h Invisible.h 
+main.o: main.cpp Bombas.h  Espina.h Jugador.h V.h Item.h Escenario.h Tren.h Invisible.h V.h Espina.h Normal.h 
 	g++ -c main.cpp      
 
 #Tren
@@ -18,7 +18,7 @@ Bombas.o: Bombas.cpp  Item.h Bombas.h
 	g++ -c Bombas.cpp
 
 #Escenario
-Escenario.o:Escenario.cpp  Item.h Bombas.h 
+Escenario.o:Escenario.cpp  Item.h  V.h Normal.h  Espina.h Bombas.h 
 	g++ -c Escenario.cpp
 
 #Item

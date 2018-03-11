@@ -4,11 +4,12 @@
 
 using namespace std;
 
-Jugador::Jugador(string nombre, int estado, int tipo)
-{
+Jugador::Jugador(string nombre,string simbolo,int estado, int tipo)
+{ /*int x, int y, */
     this->nombre = nombre;
     this->estado = estado;
     this->tipo = tipo;
+    this->simbolo=simbolo;
 }
 Jugador::Jugador()
 {

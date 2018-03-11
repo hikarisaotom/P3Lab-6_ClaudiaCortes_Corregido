@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdlib>
 #include <pthread.h>
+#include <typeinfo>
 /*CLASES*/
 #include "Bombas.h"
 #include "Normal.h"
@@ -24,17 +25,20 @@ int menu();
 int menu2();
 int menu3();
 string menunombre();
+string menunombre_escenario();
 void movimiento();
-void Juego(string);
+void Juego(string, string, int);
 int kbhit(void);
 void Cargando();
+Escenario *Tablero;
+Jugador *player;
+Jugador *boot1;
+Jugador *boot2;
+Jugador *boot3;
+Jugador *boot4;
 int main(void)
 {
-    Escenario *Tablero;
-    Jugador *player;
-    Jugador *boot1;
-    Jugador *boot2;
-    Jugador *boot3;
+
     int opcion = menu();
     int escenario;
     int bomba;
@@ -46,21 +50,41 @@ int main(void)
         escenario = menu2();
         bomba = menu3();
         string nombre = menunombre();
-        player = new Jugador(nombre, true, 1);
-        boot1 = new Jugador("Boot1", true, 1);
-        boot2 = new Jugador("Boot1", true, 1);
-        boot3 = new Jugador("Boot1", true, 1);
-        int num = 1 + rand() % (5 - 1);
+        string nombre_escenario = menunombre_escenario();
+        player = new Jugador(nombre, " * ", true, 1);
+        boot1 = new Jugador("Boot1", " Y ", true, 2);
+        boot2 = new Jugador("Boot2", " 0 ", true, 2);
+        boot3 = new Jugador("Boot3", " X ", true, 2);
+        boot4 = new Jugador("Boot4", " Y", true, 2);
+        int Vidas = 1 + rand() % (3 - 1);
         if (escenario == 1)
         {
-            Tablero = new Invisible(num, num, bomba, "Invisible1");
+            Tablero = new Invisible(Vidas, bomba, bomba, nombre_escenario);
         }
         else
         {
-            Tablero = new Tren(nombre, bomba);
+            Tablero = new Tren(nombre_escenario, 1 + rand() % (3 - 1));
         }
-        Cargando();
-        Juego(nombre);
+       // Cargando();
+        boot1->setX(10);boot1->setY(0);
+        boot2->setX(0);boot2->setY(12);
+        boot3->setX(10);boot3->setY(12);
+        Tablero->setposicion(0, 0, player);//*
+        Tablero->setposicion(10,0, boot1); //Y
+        Tablero->setposicion(0, 12, boot2);//x
+        Tablero->setposicion(10,12,boot3);
+        player->setX(0);
+        player->setY(0);
+        /*boots */
+     
+        if (escenario == 1)
+        {
+            Juego(nombre, nombre_escenario, Vidas);
+        }
+        else
+        {
+            Juego(nombre, nombre_escenario, -1);
+        }
         break;
     }
     case 2:
@@ -71,122 +95,151 @@ int main(void)
     } //Fin del switch
 }
 
-void Juego(string Nombre)
+void Juego(string Nombre, string nombre_escenario, int Vidas)
 {
     erase();
-    char ser = '*';
+    //Crear Jugadores bot
+    Jugador *botplayer1 = new Jugador( "Boot1","-",true,1);
+    Jugador *botplayer2 = new Jugador("boot2","-", true, 1);
+    Jugador *botplayer3 = new Jugador("Boot3", "-", true, 1);
+    Tablero->getMatrix()[0][0] = player;
+    Tablero->getMatrix()[botplayer1->getX()][botplayer1->getY()] = botplayer1;
+    Tablero->getMatrix()[botplayer2->getX()][botplayer2->getY()] = botplayer2;
+    Tablero->getMatrix()[botplayer3->getX()][botplayer3->getY()] = botplayer3;
+   // string player = player->toString();
+    char ser = 'x';
     int x, y;
-    int cx = 1;
-    int cy = 1;
+    int cx = 0;
+    int cy = 0;
     getmaxyx(stdscr, y, x);
     move(y / 2, x / 2 - 18);
-    start_color();
-    init_pair(1, COLOR_WHITE, COLOR_BLACK);
-    attron(COLOR_PAIR(1));
-    printw("Jugador: ");
-    printw(Nombre.c_str());
-    printw("\n");
-    printw("->ENTER PARA INICIAR <-");
-    printw("\n");
-    move(y / 2 + 1, x / 2 - 29);
-    printw("Nota: para Jugar utilice la combinacion de teclas W,A,S,D");
-    printw("\n");
-    refresh();
-    attroff(COLOR_PAIR(1));
-    //keypad(stdscr, TRUE);
     int tecla;
-    tecla = getch();
-    while (tecla != 10)
-    {
-        tecla = getch();
-    }
-
-    int direccion = 3;
-    cx = x / 2;
-    cy = y / 2;
+    int direccion;
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    attron(COLOR_PAIR(2));
+    refresh();
     curs_set(0);
-    erase();
-
     while (true)
     {
+       /* printw("%c", 'h');
+        printw("%c", 'x');*/
         noecho();
-        move(cy, cx);
-        printw("%c", ser);
-        refresh();
-        tecla = getch();
-        //ARRIBA
-        if (tecla == 119)
+        if ((cx >= 0 && cy >= 0) && (cx <= 10 && cy <= 12))
         {
-            direccion = 1;
-        }
-        //IZQUIERDA
-        if (tecla == 97)
-        {
-            direccion = 2;
-        }
-        //DERECHA
-        if (tecla == 100)
-        {
-            direccion = 3;
-        }
-        //ABAJO
-        if (tecla == 115)
-        {
-            direccion = 4;
-        }
-        echo();
-        if ((cx > 0 && cy > 0) && (cx < 66 && cy < 33))
-        {
-            mvprintw(0, 30, "Jugador: ");
-            mvprintw(0, 39, Nombre.c_str());
+            mvprintw(0, 15, "Jugador: ");
+            mvprintw(0, 24, Nombre.c_str());
+            mvprintw(0, 34, "Escenario: ");
+            mvprintw(0, 43, nombre_escenario.c_str());
             move(cy, cx);
-            printw("*");
+            if (Vidas > 0)
+            {
+                //mvprintw(0, 52,"Vidas <3: ");
+                mvprintw(0, 52, "VIdas <3 : %d", Vidas);
+            }
+            for (int i = 0; i < 11; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                    move(i + 1, j + 1);
+                    printw(Tablero->getMatrix()[i][j]->toString().c_str());
+                }
+            }
+
+            refresh();
+            tecla = getch();
+            //ARRIBA
+            if (tecla == 119)
+            {
+                direccion = 1;
+            }
+            //IZQUIERDA
+            if (tecla == 97)
+            {
+                direccion = 2;
+            }
+            //DERECHA
+            if (tecla == 100)
+            {
+                direccion = 3;
+            }
+            //ABAJO
+            if (tecla == 115)
+            {
+                direccion = 4;
+            }
+            else
+            {
+            }
+            echo();
             if (direccion == 1)
             {
-                cy = cy - 3;
-                move(cy + 3, cx);
-                printw(" ");
-                refresh();
+                if (cx - 1 >= 0)
+                {
+                    if (Tablero->getMatrix()[cx - 1][cy]->toString() == " ")
+                    {
+                        Item *temp = Tablero->getelemento(cx,cy);
+                        Item *temp2 = Tablero->getelemento(cx-1, cy);
+                        Tablero->setMatrix(temp2, cx, cy);
+                        Tablero->setMatrix(temp, cx - 1, cy);
+                        cx = cx - 1;
+                    }
+                }
             }
             if (direccion == 2)
             {
-                cx = cx - 5;
-                move(cy, cx + 5);
-                printw(" ");
-                refresh();
+                if (cy - 1 >= 0)
+                {
+                    if (Tablero->getMatrix()[cx][cy - 1]->toString() == " ")
+                    {
+                        Item *temp = Tablero->getelemento(cx, cy);
+                        Item *temp2 = Tablero->getelemento(cx, cy-1);
+                        Tablero->setMatrix(temp2, cx, cy);
+                        Tablero->setMatrix(temp, cx, cy - 1);
+                        cy = cy - 1;
+                    }
+                }
             }
             if (direccion == 3)
             {
-                cx = cx + 5;
-                move(cy, cx - 5);
-                printw(" ");
-                refresh();
+                if (cy + 1 <= 12)
+                {
+                    if (Tablero->getMatrix()[cx][cy + 1]->toString() == " ")
+                    {
+                        Item *temp = Tablero->getelemento(cx, cy);
+                        Item *temp2 = Tablero->getelemento(cx , cy+1);
+                        Tablero->setMatrix(temp2, cx, cy);
+                        Tablero->setMatrix(temp, cx, cy + 1);
+                        cy = cy + 1;
+                    }
+                }
             }
             if (direccion == 4)
             {
-                cy = cy + 3;
-                move(cy - 3, cx);
-                printw(" ");
-                refresh();
+                if (cx + 1 <= 10)
+                {
+                    if (Tablero->getMatrix()[cx + 1][cy]->toString() == " ")
+                    {
+                        Item *temp = Tablero->getelemento(cx, cy);
+                        Item *temp2 = Tablero->getelemento(cx + 1, cy);
+                        Tablero->setMatrix(temp2, cx, cy);
+                        Tablero -> setMatrix(temp, cx + 1, cy);
+                        cx = cx + 1;
+                    }
+                }
             }
-            move(cy, cx);
-            // printw("%c", ser);
-            printw("*");
-            refresh();
         }
         else
         {
             break;
         }
     }
-    erase();
-    move(y / 2, (x / 2));
-    printw("Has perdido, que mal :c lo siento ");
+    attroff(COLOR_PAIR(2));
+    move(y / 2, (x / 2 - 4));
     refresh();
-    //   keypad(stdscr, FALSE);
-    usleep(1000000 / 2);
     curs_set(1);
-}
+
+}//fin del metodo
 
 int menu()
 {
@@ -501,7 +554,31 @@ string menunombre()
     string Nombre;
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-    mvprintw(0, 0, "Ingrese su nombre por favor: ");
+    mvprintw(yMax / 2, 15, "Ingrese su nombre por favor: ");
+    char ch = getch();
+    stringstream ss;
+    while (ch != '\n')
+    {
+        Nombre.push_back(ch);
+        ss << ch;
+        ch = getch();
+    }
+    move(1, 0);
+    noecho();
+    endwin();
+    return Nombre;
+}
+
+string menunombre_escenario()
+{
+    erase();
+    initscr();
+    cbreak();
+    echo();
+    string Nombre;
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+    mvprintw(yMax / 2, 15, "Ingrese el nombre del escenario: ");
     char ch = getch();
     stringstream ss;
     while (ch != '\n')
@@ -585,3 +662,37 @@ string menunombre()
             break;
         }
     }*/
+/*for (int i = 0; i < 11; i++)
+        {
+            for (int j = 0; j < 13; j++)
+            {
+                Item *Objeto = Tablero->getelemento(i, j);
+               
+                if (Objeto!=NULL)
+                {
+                    if (typeid(*Objeto) == typeid(Jugador))
+                    {
+                        Jugador *actual = dynamic_cast<Jugador *>(Objeto);
+
+                        if (actual != NULL)
+                        {
+                            move(j + 1, x + 1);
+                            printw(actual->toString().c_str());
+                        }
+                    }
+                }else{
+                    printw("    ");
+                    }//FIN DEL IF DE VER SI ESTA NULO 
+            }
+        }*/
+
+/* mvprintw(0, 15, "Jugador: ");
+            mvprintw(0, 24, Nombre.c_str());
+            mvprintw(0, 34, "Escenario: ");
+            mvprintw(0, 43, nombre_escenario.c_str());
+            move(cy, cx);
+            if (Vidas > 0)
+            {
+                //mvprintw(0, 52,"Vidas <3: ");
+                mvprintw(0, 52, "VIdas <3 : %d", Vidas);
+            }*/

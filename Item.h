@@ -12,6 +12,7 @@ class Item{
     private:
         int x;
         int y;
+        int tipo;
     public:
         Item();
         Item(int,int);

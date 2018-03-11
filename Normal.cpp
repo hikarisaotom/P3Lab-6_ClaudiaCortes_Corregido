@@ -3,16 +3,17 @@
 #include <string>
 
 using namespace std;
+//Constructor2
+Normal::Normal():Bombas()
+{
+
+} //Fin constructor sencillo
 
 //Cosntructor 1
 Normal::Normal(int alcance,int cont):Bombas(cont){
     this->alcance=alcance;
 }//Fin constructor
 
-//Constructor2
-Normal::Normal(){
-
-}//Fin constructor sencillo
 
 int Normal::getAlcance(){
     return alcance;
@@ -32,4 +33,14 @@ Normal::~Normal(){
 
 string Normal::xxxxx(){
     
+}
+
+string Normal::getSimbolo()
+{
+    return simbolo;
+}
+
+void Normal::setSimbolo(string simbolo)
+{
+    this->simbolo = simbolo;
 }

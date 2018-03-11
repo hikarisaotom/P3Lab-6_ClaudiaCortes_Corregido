@@ -4,9 +4,9 @@
 //#include "Escenario.h"
 using namespace std;
 
-Invisible::Invisible(int aleatorio, int valor, int tipobomba,string S):Escenario(S,tipobomba)
+Invisible::Invisible(int aleatorio, int valo, int tipobomba,string S):Escenario(S,tipobomba)
 {
-    this->valor = valor;
+    this->valor = valor;//Tipo de BOmba que se utilizara 
     this->aleatorio = aleatorio;
 }
 
@@ -23,3 +23,5 @@ string Invisible::xxxxx()
 {
     this->nombre = nombre;
 }*/
+
+

@@ -15,7 +15,7 @@ class Escenario
 {
   private:
     string nombre;
-    Item *matriz[11][13];
+    Item *** matriz;
     vector<Bombas *> bombas;
 
   public:
@@ -23,7 +23,11 @@ class Escenario
     Escenario();
     virtual string xxxxx()=0;
     void setNombre(string);
-
+    void setposicion(int, int, Item *);
+    Item* getelemento(int,int);
+    void imprimir_matriz();
+    void setMatrix(Item *, int, int);
+    Item ***getMatrix();
     ~Escenario();
 };
 #endif
