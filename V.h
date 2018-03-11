@@ -5,16 +5,16 @@ using namespace std;
 
 #ifndef V_H
 #define V_H
-class V:public Bombas{
+
+class V: public Bombas{
     private:
         string simbolo="V";
     public:
         V();
-        V(string,int);
+        V(int, int, int, int);
         string getSimbolo();
-        void setSimbolo(string);
-        string xxxxx();
-        ~V();
+	string toString();
+    ~V();
 };
 
 

@@ -4,38 +4,42 @@
 
 using namespace std;
 
-Espina::Espina(string simbolo,int cantidad,int cont):Bombas(cont){
-    this->simbolo=simbolo;
-    this->cantidad=cantidad;
+Espina::Espina(int tipo, int x, int y, int contador, int cantidad) : Bombas(tipo, x, y, contador)
+{
 }
 
-Espina::Espina(){
-
+Espina::Espina()
+{
 }
 
-string Espina::getSimbolo(){
+string Espina::getSimbolo()
+{
     return simbolo;
 }
 
-void Espina:: setSimbolo(string simbolo){
+void Espina::setSimbolo(string simbolo)
+{
 
-    this->simbolo=simbolo;
-
+    this->simbolo = simbolo;
 }
 
-int Espina::getCantidad(){
+int Espina::getCantidad()
+{
     return cantidad;
 }
 
-void Espina:: setCantidad(int cantidad){
+void Espina::setCantidad(int cantidad)
+{
 
-    this->cantidad=cantidad;
-
+    this->cantidad = cantidad;
 }
 
-Espina::~Espina(){
+Espina::~Espina()
+{
 }
 
-string Espina::xxxxx(){
-	return simbolo;
+string Espina::toString()
+{
+    simbolo="x";
+    return simbolo;
 }

@@ -5,7 +5,7 @@
 #include "Normal.h"
 #include "V.h"
 #include "Espina.h"
-#include <vector>
+
 using namespace std;
 
 #ifndef ESCENARIO_H
@@ -15,19 +15,12 @@ class Escenario
 {
   private:
     string nombre;
-    Item *** matriz;
-    vector<Bombas *> bombas;
-
+    Item*** Matriz;
   public:
-    Escenario(string, int);
-    Escenario();
-    virtual string xxxxx()=0;
-    void setNombre(string);
-    void setposicion(int, int, Item *);
-    Item* getelemento(int,int);
-    void imprimir_matriz();
-    void setMatrix(Item *, int, int);
-    Item ***getMatrix();
+    Escenario(string);
+    virtual string getNombre();
+    void setMatrix(Item*, int, int);
+    Item*** getMatrix();
     ~Escenario();
 };
 #endif

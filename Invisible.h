@@ -12,18 +12,13 @@ using namespace std;
 class Invisible : public Escenario
 {
   private:
-    /*string nombre;
-    Item *matriz[11][13];
-    vector<Bombas *> bombas;*/
     int aleatorio;
-    int valor;
+    int tipobomba;
 
   public:
-    Invisible(int, int, int,string); /*ale,valor,tipo bomba,string*/
-    //Invisible();
-    string xxxxx();
-        //void setNombre(string);
-
-        ~Invisible();
+    Invisible(string,int); 
+    Invisible();
+    int getAleatorio();
+    ~Invisible();
 };
 #endif

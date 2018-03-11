@@ -10,14 +10,16 @@ using namespace std;
 //Inicio clase
 class Item{
     private:
+	int tipo;
         int x;
         int y;
-        int tipo;
     public:
         Item();
-        Item(int,int);
+        Item(int,int,int);
         int getX();
         void setX(int);
+	int getTipo();
+        void setTipo(int);
         int getY();
         void setY(int);
 	virtual string toString();

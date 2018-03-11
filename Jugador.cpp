@@ -4,12 +4,11 @@
 
 using namespace std;
 
-Jugador::Jugador(string nombre,string simbolo,int estado, int tipo)
-{ /*int x, int y, */
+Jugador::Jugador(int tipoItem,string nombre, int estado, int tipo, int x, int y):Item(tipoItem,x,y)
+{
     this->nombre = nombre;
     this->estado = estado;
     this->tipo = tipo;
-    this->simbolo=simbolo;
 }
 Jugador::Jugador()
 {
@@ -54,5 +53,10 @@ Jugador::~Jugador()
 
 string Jugador::toString()
 {
+    if(tipo==1){
+        simbolo="8";
+    }else{
+        simbolo=":";
+    }
     return simbolo;
 }

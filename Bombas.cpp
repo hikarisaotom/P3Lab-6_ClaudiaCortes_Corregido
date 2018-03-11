@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Bombas::Bombas(int contador)
+Bombas::Bombas(int tipo, int x, int y, int contador) : Item(tipo, x, y)
 {
     this->contador = contador;
 }
@@ -27,7 +27,7 @@ Bombas::~Bombas()
 {
 }
 
-string Bombas::xxxxx()
+string Bombas::toString()
 {
-    return "x";
+    return "X";
 }

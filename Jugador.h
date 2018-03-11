@@ -13,11 +13,11 @@ class Jugador: public Item{
         string nombre;
         int estado;
         int tipo;
-	    string simbolo;
+	string simbolo;
 
     public:
         Jugador();
-        Jugador(/*int,int, */string,string,int,int);
+        Jugador(int,string,int,int, int, int);
         string getNombre();
         void setNombre(string);
         int getEstado();

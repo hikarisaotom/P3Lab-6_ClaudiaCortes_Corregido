@@ -15,9 +15,8 @@ class Tren : public Escenario
     vector <int> postren;
     vector<string>listapos;
   public:
-    Tren(string,int); /*ale,valor,tipo bomba,string*/
+    Tren(string); /*ale,valor,tipo bomba,string*/
   //  Tren();
-    string xxxxx();
-     ~Tren();
+   ~Tren();
 };
 #endif

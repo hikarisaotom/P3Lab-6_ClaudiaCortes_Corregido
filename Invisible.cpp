@@ -1,27 +1,22 @@
 #include "Invisible.h"
 #include <iostream>
 #include <string>
-//#include "Escenario.h"
+#include "Escenario.h"
+#include<stdlib.h>
+
 using namespace std;
 
-Invisible::Invisible(int aleatorio, int valo, int tipobomba,string S):Escenario(S,tipobomba)
+Invisible::Invisible(string nombre, int tipobomba) : Escenario(nombre)
 {
-    this->valor = valor;//Tipo de BOmba que se utilizara 
-    this->aleatorio = aleatorio;
+    this->tipobomba=tipobomba;
 }
 
+int Invisible::getAleatorio(){
+      aleatorio=1 + (rand() % 3);
+      return aleatorio;
+}
 
 Invisible::~Invisible()
 {
 }
-
-string Invisible::xxxxx()
-{
-    return "x";
-}
-/*Escenario::setNombre(string nombre)
-{
-    this->nombre = nombre;
-}*/
-
 

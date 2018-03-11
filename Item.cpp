@@ -5,13 +5,9 @@
 
 using namespace std;
 
-Item::Item(int x, int y)
+Item::Item(int tipo, int x, int y)
 {
-    if(x==0&y==0){
-        tipo=1;
-    }else{
-        tipo=2;
-    }
+    this->tipo = tipo;
     this->x = x;
     this->y = y;
 }
@@ -34,6 +30,17 @@ void Item::setX(int x)
 int Item::getY()
 {
     return y;
+}
+
+int Item::getTipo()
+{
+    return tipo;
+}
+
+void Item::setTipo(int y)
+{
+
+    this->tipo = tipo;
 }
 
 void Item::setY(int y)
