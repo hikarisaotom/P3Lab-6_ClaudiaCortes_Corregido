@@ -1,0 +1,33 @@
+#EXE
+EXE: main.o Tren.o Invisible.o Bombas.o Escenario.o Item.o Jugador.o Normal.o Espina.o V.o 
+    g++ main.o Tren.o Invisible.o Bombas.o Escenario.o Item.o Jugador.o Normal.o ESpina.o V.o 
+#main
+main.o: main.cpp Bombas.h Normal.h Espina.h Jugador.h V.h Item.h Escenario.h Tren.h Invisible.h
+    g++ -c main.cpp 
+#Tren
+Tren.o: Tren.cpp Escenario.h Tren.h
+    g++ -c Tren.cpp 
+#Invisible
+Invisible.o: Escenario.h Invisible.h Invisible.cpp 
+    g++ -c Invisible.cpp 
+#Bombas
+Bombas.o: Bombas.cpp Bombas.h Item.h 
+    g++ -c Bombas.cpp 
+#Escenario
+Escenario.o: Escenario.cpp Item.h Bombas.h 
+    g++ -c Escenario.cpp 
+#Item 
+Item.o: Item.cpp Item.h 
+    g++ -c Item.cpp 
+#Jugador
+Jugador.o: Jugador.cpp Jugador.h Item.h 
+    g++ -c Jugador.cpp
+#Espina
+Espina.o: Espina.cpp Espina.h Bombas.h 
+    g++ -c Espina.cpp 
+#V 
+V.o: V.cpp V.h Bombas.h 
+    g++ -c V.cpp 
+#Normal
+Normal.o:Normal.h Normal.cpp Bombas.h 
+    g++ -c Normal.cpp 
