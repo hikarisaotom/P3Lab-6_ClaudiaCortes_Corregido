@@ -1,9 +1,13 @@
-using namespace std;
+/*INCLUDES*/
 #include <ncurses.h>
 #include <stdio.h>
 #include <iostream>
 #include <unistd.h>
 #include <vector>
+#include <typeinfo>
+#include <stdlib.h>
+#include <sstream>
+/*CLASES*/
 #include "Jugador.h"
 #include "Bombas.h"
 #include "Espina.h"
@@ -12,10 +16,7 @@ using namespace std;
 #include "Escenario.h"
 #include "Invisible.h"
 #include "Tren.h"
-#include <typeinfo>
-#include <stdlib.h>
-#include <sstream>
-Escenario *Tablero= NULL;
+/*METODOS*/
 void salir();
 int menu();
 int menu();
@@ -23,64 +24,63 @@ int menu2();
 int menu3();
 string menunombre();
 string menunombre_escenario();
-//void registro();
 int tipoBomba();
 void Cargando();
-int e;
-Jugador *jugador;
 void EscenarioInvisible();
 int tipobomba;
 void Juego(string, string, int);
 void crearBomba();
+/*Variables globales*/
+int e;
+Jugador *jugador;
+Escenario *Tablero = NULL;
 int vida = 1 + rand() % (3 - 1);
+Jugador *boot1 = NULL;
+Jugador *boot2 = NULL;
+Jugador *boot3 = NULL;
+Jugador *boot4 = NULL;
+/*STD*/
+using namespace std;
 int main(void)
 {
-    int z;
     int escenario;
-  
-        switch (menu())
-        {
-        case 1:
-        {
-            escenario = menu2();
-            tipobomba = menu3();
-            string Nombre = menunombre();
-            string nombre_escenario = menunombre_escenario();
-            jugador = new Jugador(2, Nombre, true, 1, 0, 0);
-            if(escenario==1){//Invisible
-                Tablero = new Invisible(nombre_escenario, tipobomba);
-                Cargando();
-                erase();
-                Juego(Nombre, nombre_escenario, vida);
-            }else{//EL otro
-                Tablero = new Tren(nombre_escenario);
-                Cargando();
-                erase();
-                Juego(Nombre, nombre_escenario, -1);
-            }
-          
-          
-                break;
-        }
-        case 2:
-        {
-            salir();
-            /*curs_set(0);
-            move(5, 21);
-            printw("Tren");
-            refresh();
-            usleep(1000000);
-            registro();
-            e = 2;
-            tipobomba = tipoBomba();
+    switch (menu())
+    {
+    case 1:
+    {
+        escenario = menu2();
+        tipobomba = menu3();
+        string Nombre = menunombre();
+        string nombre_escenario = menunombre_escenario();
+        jugador = new Jugador(2, Nombre, true, 1, 0, 0);
+        boot1= new Jugador(2, "Boot1", 1, 2, 10, 0);
+        boot2 = new Jugador(2, "Boot2", 1, 2, 0, 12);
+        boot3 = new Jugador(2, "Boot3", 1, 2, 10, 12);
+        boot4 = new Jugador(2, "Boot4", 1, 2, 5, 6);
+
+        if (escenario == 1)
+        { //Invisible
+            Tablero = new Invisible(nombre_escenario, tipobomba);
             Cargando();
             erase();
-            Juego();
-            curs_set(1);
-            break;*/
+            Juego(Nombre, nombre_escenario, vida);
         }
-        }//Fin del switch 
-}//fin del main.
+        else
+        { //EL otro
+            Tablero = new Tren(nombre_escenario);
+            Cargando();
+            erase();
+            Juego(Nombre, nombre_escenario, -1);
+        }
+
+        break;
+    }
+    case 2:
+    {
+        salir();
+    }
+    } //Fin del switch
+} //fin del main.
 
 int menu()
 {
@@ -128,7 +128,6 @@ int menu()
         }
         else
         {
-            //printw("%i",tecla);
             if (tecla == 65 && cy > 2)
             {
                 //printw(" arriba");
@@ -137,7 +136,6 @@ int menu()
             }
             else if (tecla == 66 && cy <= 4)
             {
-                //printw(" abajo");
                 cy = cy + 1;
                 move(cy, cx);
             }
@@ -183,122 +181,6 @@ void salir()
     exit(0);
 }
 
-void registro()
-{
-    erase();
-    refresh();
-    int x, y;
-    getmaxyx(stdscr, y, x);
-    move(0, (x / 2 - 12));
-    start_color();
-    init_pair(1, COLOR_CYAN, COLOR_WHITE);
-    attron(COLOR_PAIR(1));
-    printw("<<Registro de Jugador>>");
-    attroff(COLOR_PAIR(1));
-
-    start_color();
-    init_pair(4, COLOR_GREEN, COLOR_BLACK);
-    attron(COLOR_PAIR(4));
-    move(y - 1, 0);
-    printw("Presione Enter Para Continuar");
-    attroff(COLOR_PAIR(4));
-
-    char nombre[100];
-    init_pair(2, COLOR_BLUE, COLOR_BLACK);
-    move(1, 0);
-    attron(COLOR_PAIR(2));
-    printw("Ingrese su Nombre:");
-    attroff(COLOR_PAIR(2));
-    move(1, 20);
-    echo();
-    scanw("%s", nombre);
-    string name = nombre;
-    int estado = 1;
-    int tipo = 1;
-    jugador = new Jugador(2, name, estado, tipo, 0, 0);
-}
-
-int tipoBomba()
-{
-    erase();
-    refresh();
-    int x, y;
-    getmaxyx(stdscr, y, x);
-    move(0, (x / 2 - 10));
-    start_color();
-    init_pair(1, COLOR_CYAN, COLOR_WHITE);
-    attron(COLOR_PAIR(1));
-    printw("<<Tipos de Bombas>>");
-    attroff(COLOR_PAIR(1));
-    start_color();
-    init_pair(4, COLOR_GREEN, COLOR_BLACK);
-    attron(COLOR_PAIR(4));
-    move(y - 1, 0);
-    printw("Presione Enter Para Continuar");
-    attroff(COLOR_PAIR(4));
-    curs_set(1);
-    start_color();
-    init_pair(2, COLOR_WHITE, COLOR_BLACK);
-    attron(COLOR_PAIR(2));
-    move(1, 0);
-    printw("Escoja un Tipo de Bomba [Presione Enter]:\n");
-    move(2, 1);
-    printw("1) Normal \n");
-    move(3, 1);
-    printw("2) Espina \n");
-    move(4, 1);
-    printw("3) V \n");
-    attroff(COLOR_PAIR(2));
-    int cx = 0;
-    int cy = 2;
-    int tecla;
-    move(cy, cx);
-    refresh();
-    while (true)
-    {
-        noecho();
-        tecla = getch();
-        if (tecla == 10)
-        {
-            if (cy == 2)
-            {
-                return 1;
-            }
-            if (cy == 3)
-            {
-                return 2;
-            }
-            if (cy == 4)
-            {
-                return 3;
-            }
-        }
-        else
-        {
-            //printw("%i",tecla);
-            if (tecla == 65 && cy > 2)
-            {
-                //printw(" arriba");
-                cy = cy - 1;
-                move(cy, cx);
-            }
-            else if (tecla == 66 && cy < 4)
-            {
-                //printw(" abajo");
-                cy = cy + 1;
-                move(cy, cx);
-            }
-            else
-            {
-                //No hará nada
-            }
-        }
-        refresh();
-    }
-    curs_set(0);
-    echo();
-}
-
 void Cargando()
 {
     int x, y;
@@ -329,26 +211,17 @@ void Cargando()
     endwin();
 }
 
-void EscenarioInvisible()
-{
-    string nombre = "Invisible";
-    Tablero= new Invisible(nombre, tipobomba);
-}
-
 void Juego(string Nombre, string nombre_escenario, int Vidas)
 {
-    //Crear Jugadores bot
-    Jugador *botplayer1 = new Jugador(2, "Carlos", 1, 2, 10, 0);
-    Jugador *botplayer2 = new Jugador(2, "Wilfredo", 1, 2, 0, 12);
-    Jugador *botplayer3 = new Jugador(2, "Will", 1, 2, 10, 12);
-    Jugador *botplayer4 = new Jugador(2, "Fredo", 1, 2, 5, 6);
     //Crear Jugador
     Tablero->getMatrix()[0][0] = jugador;
     //Meterlos en la Matriz
-    Tablero->setMatrix(botplayer1, 10, 0);
-    Tablero->setMatrix(botplayer2, 0, 12);
-    Tablero->setMatrix(botplayer3, 10, 12);
-    Tablero->setMatrix(botplayer4, 5, 6);
+    Tablero->setMatrix(boot1
+, 10, 0);
+    Tablero->setMatrix(boot2, 0, 12);
+    Tablero->setMatrix(boot3, 10, 12);
+    Tablero->setMatrix(boot4, 5, 6);
+
     int x, y;
     int cx = 0;
     int cy = 0;
@@ -362,20 +235,18 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
     curs_set(0);
     while (true)
     {
-        mvprintw(0, 15, "Jugador: ");
+        mvprintw(0, 15, "-> Jugador: ");
         mvprintw(0, 24, Nombre.c_str());
-        mvprintw(0, 34, "Escenario: ");
+        mvprintw(0, 34, "-> Escenario: ");
         mvprintw(0, 43, nombre_escenario.c_str());
         move(cy, cx);
         if (Vidas > 0)
         {
-            //mvprintw(0, 52,"Vidas <3: ");
-            mvprintw(0, 52, "VIdas <3 : %d", Vidas);
+            mvprintw(0, 52, "-> Vidas <3 : %d", Vidas);
         }
-       /* move(21, 8);
-        printw("%i", vida);*/
         if (vida == 0)
         {
+            /*Entonces te moriste we....*/
             break;
         }
         noecho();

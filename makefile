@@ -1,8 +1,8 @@
-RUN: Main.o Escenario.o Item.o Jugador.o Tren.o Bombas.o Invisible.o V.o Normal.o Espina.o 
-	g++ Main.o Escenario.o Item.o Jugador.o Invisible.o Tren.o Bombas.o V.o Normal.o Espina.o -o EXE -lncurses
+EXE: main.o Escenario.o Item.o Jugador.o Tren.o Bombas.o Invisible.o V.o Normal.o Espina.o 
+	g++ main.o Escenario.o Item.o Jugador.o Invisible.o Tren.o Bombas.o V.o Normal.o Espina.o -o EXE -lncurses
 
-Main.o: Main.cpp Escenario.h Item.h Jugador.h Tren.h Invisible.h Bombas.h V.h Normal.h Espina.h
-	g++ -c Main.cpp
+main.o: main.cpp Escenario.h Item.h Jugador.h Tren.h Invisible.h Bombas.h V.h Normal.h Espina.h
+	g++ -c main.cpp
 
 Escenario.o: Escenario.h Escenario.cpp
 	g++ -c Escenario.cpp
