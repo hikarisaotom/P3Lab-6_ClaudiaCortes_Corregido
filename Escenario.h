@@ -29,6 +29,9 @@ class Escenario
     void Explotar(int,int,int);
     void V_Explote(int,int);
     void moverboot();
+    int convertirNumero(char);
+    int getPX(string);
+    int getPY(string);
     void limpiarTren(vector <string>);
 
     ~Escenario();

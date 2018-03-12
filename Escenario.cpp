@@ -352,7 +352,12 @@ void Escenario::V_Explote(int i, int j){
 }
 
 void Escenario::limpiarTren(vector<string> listapos){
-
+        for(int i=0;i<listapos.size();i++){
+            int x,y;
+            x = getPX(listapos[i]);
+            y = getPY(listapos[i]);
+            Matriz[x][y] = new Item(0, x, y);
+        }
 }
 
 void Escenario::moverboot(){
@@ -414,4 +419,64 @@ void Escenario::moverboot(){
             }
         }
     }
+}
+
+int Escenario::convertirNumero(char le)
+{
+    int n = 0;
+
+    if (le == '1')
+    {
+        n = 1;
+    }
+    else if (le == '2')
+    {
+        n = 2;
+    }
+    else if (le == '3')
+    {
+        n = 3;
+    }
+    else if (le == '4')
+    {
+        n = 4;
+    }
+    else if (le == '5')
+    {
+        n = 5;
+    }
+    else if (le == '6')
+    {
+        n = 6;
+    }
+    else if (le == '7')
+    {
+        n = 7;
+    }
+    if (le == '8')
+    {
+        n = 8;
+    }
+    else if (le == '9')
+    {
+        n = 9;
+    }
+
+    return n;
+
+} //Fin de la funcion convertir nuermeo
+
+int Escenario::getPX(string palabra)
+{
+    int x;
+    x = convertirNumero(palabra[0]);
+    return x;
+
+} //Fin getX
+
+int Escenario::getPY(string palabra)
+{
+    int y = 0;
+    y = convertirNumero(palabra[2]);
+    return y;
 }
