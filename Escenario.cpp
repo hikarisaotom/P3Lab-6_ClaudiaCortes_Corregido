@@ -137,7 +137,7 @@ void Escenario::CrearBomba(int tipobomba)
                         }
                         Matriz[i][j + 1] = Bomba_Temp;
                         listaBombas.push_back(Bomba_Temp);
-                         break;
+                        break;
                     }
                 }
                 if (i + 1 <= 10)
@@ -150,14 +150,14 @@ void Escenario::CrearBomba(int tipobomba)
                         }
                         if (tipobomba == 2)
                         {
-                            Bomba_Temp= new Espina(1, i + 1, j, 4, 0);
+                            Bomba_Temp = new Espina(1, i + 1, j, 4, 0);
                         }
                         if (tipobomba == 3)
                         {
-                           Bomba_Temp = new V(1, i + 1, j, 4);
+                            Bomba_Temp = new V(1, i + 1, j, 4);
                         }
-                        Matriz[i + 1][j]=Bomba_Temp;
-                         listaBombas.push_back(Bomba_Temp);
+                        Matriz[i + 1][j] = Bomba_Temp;
+                        listaBombas.push_back(Bomba_Temp);
                         break;
                     }
                 }
@@ -175,7 +175,7 @@ void Escenario::CrearBomba(int tipobomba)
                         }
                         if (tipobomba == 3)
                         {
-                           Bomba_Temp = new V(1, i, j - 1, 4);
+                            Bomba_Temp = new V(1, i, j - 1, 4);
                         }
                         Matriz[i][j - 1] = Bomba_Temp;
                         listaBombas.push_back(Bomba_Temp);
@@ -198,7 +198,7 @@ void Escenario::CrearBomba(int tipobomba)
                         {
                             Bomba_Temp = new V(1, i - 1, j, 4);
                         }
-                        Matriz[i - 1][j]=Bomba_Temp;
+                        Matriz[i - 1][j] = Bomba_Temp;
                         listaBombas.push_back(Bomba_Temp);
                         break;
                     }
@@ -208,6 +208,149 @@ void Escenario::CrearBomba(int tipobomba)
     }
 }
 
-void Escenario::Explotar(Bombas *Bomba_Explotar)
+void Escenario::Explotar(int i, int j,int tipobomba)
 {
+    int alcance;
+    int Contador;
+    Normal *bomba;
+    V *BombaV;
+    Espina *BombasE;
+    switch (tipobomba)
+    {
+    case 1:{
+        bomba = dynamic_cast<Normal *>(Matriz[i][j]);
+        bomba->setContador(bomba->getContador() - 1);
+        Contador = bomba->getContador();
+        alcance = bomba->getAlcance();
+        break;
+    }
+    case 2:
+    {
+        Espina *BombasE;
+        BombasE = dynamic_cast<Espina *>(Matriz[i][j]);
+        BombasE->setContador(BombasE->getContador() - 1);
+        alcance = 100;
+        Contador = BombasE->getContador();
+         break;
+    }
+    case 3:
+    {
+     /*   V *BombaV;
+        BombaV = dynamic_cast<V *>(Matriz[i][j]);
+        BombaV->setContador(BombaV->getContador() - 1);
+       alcance = 100;
+        break;*/
+        V_Explote(i,j);
+    }
+}
+    
+  
+   
+
+    if (Contador == 0)
+    {
+        if (i - alcance >= 0)
+            for (int k = 1; k <= alcance; k++)
+            {
+                if (Matriz[i - k][j]->toString() != "O")
+                    Matriz[i - k][j] = new Item(0, i - k, j);
+                else
+                    k = 100;
+            }
+        if (i + alcance <= 10)
+            for (int k = 1; k <= alcance; k++)
+            {
+                if (Matriz[i + k][j]->toString() != "O")
+                    Matriz[i + k][j] = new Item(0, i + k, j);
+                else
+                    k = 100;
+            }
+
+        if (j - alcance >= 0)
+            for (int k = 1; k <= alcance; k++)
+            {
+                if (Matriz[i][j - k]->toString() != "O")
+                    Matriz[i][j - k] = new Item(0, i, j - k);
+                else
+                    k = 100;
+            }
+
+        if (j + alcance <= 12)
+            for (int k = 1; k <= alcance; k++)
+            {
+                if (Matriz[i][j + k]->toString() != "O")
+                    Matriz[i][j - k] = new Item(0, i, j + k);
+                else
+                    k = 100;
+            }
+        Matriz[i][j] = new Item(0, i, j);
+    }
+}
+
+void Escenario::V_Explote(int i, int j){
+    V *bomba;
+    bomba = dynamic_cast<V *>(Matriz[i][j]);
+    bomba->setContador(bomba->getContador() - 1);
+    int alcance = 100;
+    if (bomba->getContador() == 0)
+    {
+        for (int k = 1; k <= alcance; k++)
+        {
+            if ((i - k >= 0) && (j - k >= 0))
+            {
+                if (Matriz[i - k][j - k]->toString() != "O")
+                   Matriz[i - k][j - k]=new Item(0, i - k, j - k);
+            }
+            else
+            {
+                k = 100;
+            }
+        }
+
+        for (int k = 1; k <= alcance; k++)
+        {
+            if ((i + k <= 10) && (j + k <= 12))
+            {
+
+                if (Matriz[i + k][j + k]->toString() != "O")
+                   Matriz[i + k][j + k]=new Item(0, i + k, j + k);
+            }
+            else
+            {
+                k = 100;
+            }
+        }
+
+        for (int k = 1; k <= alcance; k++)
+        {
+            if ((j - k >= 0) && (i + k <= 10))
+            {
+                if (Matriz[i + k][j - k]->toString() != "O")
+                  Matriz[i + k][j - k]=new Item(0, i + k, j - k);
+            }
+            else
+            {
+                k = 100;
+            }
+        }
+
+        for (int k = 1; k <= alcance; k++)
+        {
+            if ((j + k <= 12) && (i - k >= 0))
+            {
+                if (Matriz[i - k][j + k]->toString() != "O")
+                    Matriz[i - k][j + k]=new Item(0, i - k, j + k);
+
+            }
+            else
+            {
+                k = 100;
+            }
+        }
+        Matriz[i][j]=new Item(0, i, j);
+    }
+}
+
+void Escenario::limpiarTren(){
+    
 }

@@ -349,7 +349,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
     move(y / 2, x / 2 - 18);
     int tecla;
     int direccion;
-    init_pair(2, COLOR_WHITE, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
     attron(COLOR_PAIR(2));
     refresh();
     curs_set(0);
@@ -376,14 +376,14 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
     }
     while (true)
     {
-        mvprintw(0, 15, "-> Jugador: ");
-        mvprintw(0, 24, Nombre.c_str());
-        mvprintw(0, 34, "-> Escenario: ");
-        mvprintw(0, 43, nombre_escenario.c_str());
+        mvprintw(0, 10, "-> Jugador: ");
+        mvprintw(0, 25, Nombre.c_str());
+        mvprintw(0, 35, "-> Escenario: ");
+        mvprintw(0, 49, nombre_escenario.c_str());
         move(P_Y, P_X);
         if (vida > 0)
         {
-            mvprintw(0, 52, "-> Vidas <3 : %d", vida);
+            mvprintw(0, 55, "-> Vidas <3 : %d", vida);
         }
         if (vida == 0)
         {
@@ -398,56 +398,25 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                    if (Tablero->TraerMatriz()[i][j]->toString() == "Q")
-                    {
-                        Normal *bomba;
-                        bomba = dynamic_cast<Normal *>(Tablero->TraerMatriz()[i][j]);
-                        bomba->setContador(bomba->getContador() - 1);
-                        Tablero->TraerMatriz()[i][j]->toString();
-                        int alcance = bomba->getAlcance();
-                        refresh();
-                        if (bomba->getContador() == 0)
-                        {
-                            if (i - alcance >= 0)
-                                for (int k = 1; k <= alcance; k++)
-                                {
-                                    if (Tablero->TraerMatriz()[i - k][j]->toString() != "O")
-                                        Tablero->CambiarPosicion(new Item(0, i - k, j), i - k, j);
-                                    else
-                                        k = 100;
-                                }
-                            if (i + alcance <= 10)
-                                for (int k = 1; k <= alcance; k++)
-                                {
-                                    if (Tablero->TraerMatriz()[i + k][j]->toString() != "O")
-                                        Tablero->CambiarPosicion(new Item(0, i + k, j), i + k, j);
-                                    else
-                                        k = 100;
-                                }
+                   /// char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                   string simbolo=Tablero->TraerMatriz()[i][j]->toString();
+                   if (simbolo == "Q" || simbolo == "0" ||simbolo == "x")
+                   {
+                       Tablero->Explotar(i, j, tipobomba);
 
-                            if (j - alcance >= 0)
-                                for (int k = 1; k <= alcance; k++)
-                                {
-                                    if (Tablero->TraerMatriz()[i][j - k]->toString() != "O")
-                                        Tablero->CambiarPosicion(new Item(0, i, j - k), i, j - k);
-                                    else
-                                        k = 100;
-                                }
-
-                            if (j + alcance <= 12)
-                                for (int k = 1; k <= alcance; k++)
-                                {
-                                    if (Tablero->TraerMatriz()[i][j + k]->toString() != "O")
-                                        Tablero->CambiarPosicion(new Item(0, i, j + k), i, j + k);
-                                    else
-                                        k = 100;
-                                }
-                            Tablero->CambiarPosicion(new Item(0, i, j), i, j);
-                        }
                     }
+                   /* if (Tablero->TraerMatriz()[i][j]->toString() == "0")
+                    {
+                        Tablero->Explotar(i, j, tipobomba);
+                    }
+
+                    if (Tablero->TraerMatriz()[i][j]->toString() == "x")
+                    {
+                        Tablero->Explotar(i, j, tipobomba);
+                    }*/
+
                     move(i + 1, j + 1);
-                    printw("%c", it);
+                    printw(Tablero->TraerMatriz()[i][j]->toString().c_str());
                     if (Tablero->TraerMatriz()[i][j]->toString() == "*")
                     {
                         cont = cont + 1;
@@ -742,22 +711,19 @@ int menu2()
         }
         else
         {
-            //printw("%i",tecla);
             if (tecla == 65 && P_Y > 2)
             {
-                //printw(" arriba");
                 P_Y = P_Y - 1;
                 move(P_Y, P_X);
             }
             else if (tecla == 66 && P_Y <= 4)
             {
-                //printw(" abajo");
                 P_Y = P_Y + 1;
                 move(P_Y, P_X);
             }
             else
             {
-                //No hara nada
+                /*NEL PERRO*/
             }
         }
         refresh();
@@ -947,4 +913,3 @@ int getPY(string palabra)
     y = convertirNumero(palabra[2]);
     return y;
 }
-

@@ -26,7 +26,9 @@ class Escenario
     Item*** TraerMatriz();
     void CrearBomba(int) ;
     void generarBomba(int);
-    void Explotar(Bombas *);
+    void Explotar(int,int,int);
+    void V_Explote(int,int);
+    void limpiarTren();
     ~Escenario();
 };
 
