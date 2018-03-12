@@ -37,6 +37,7 @@ int getPY(string);
 /*Variables globales*/
 int e;
 Jugador *jugador;
+int T_escenario;
 Escenario *Tablero = NULL;
 int vida = 1 + rand() % (3 - 1);
 Jugador *boot1 = NULL;
@@ -54,6 +55,7 @@ int main(void)
     case 1:
     {
         escenario = menu2();
+        T_escenario=escenario;
         tipobomba = menu3();
         string Nombre = menunombre();
         string nombre_escenario = menunombre_escenario();
@@ -345,6 +347,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
     int x, y;
     int cx = 0;
     int cy = 0;
+    Tren *Temporal;
     getmaxyx(stdscr, y, x);
     move(y / 2, x / 2 - 18);
     int tecla;
@@ -353,6 +356,27 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
     attron(COLOR_PAIR(2));
     refresh();
     curs_set(0);
+    vector<string> listapos;
+    if (T_escenario==2)
+    {//ES EL ESCENARIO DEL TREN
+        Temporal = new Tren("PRUEBA");
+        /*DERECHA */
+        listapos.push_back("2-5");
+        listapos.push_back("2-6");
+        listapos.push_back("2-7");
+        listapos.push_back("2-8");
+        /*ABAJO*/
+        listapos.push_back("3-8");
+        listapos.push_back("4-8");
+        listapos.push_back("5-8");
+        listapos.push_back("6-8");
+        listapos.push_back("7-8");
+        /*IZQUIERDA*/
+        listapos.push_back("7-7");
+        listapos.push_back("7-6");
+        listapos.push_back("7-5");
+        listapos.push_back("7-4");
+    }
     while (true)
     {
         mvprintw(0, 15, "-> Jugador: ");
@@ -461,121 +485,16 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                 direccion = 4;
             }
             //Crear Bomba
-            else if (tecla == 109 || tecla == 110 || tecla == 122)
+            else if ( tecla == 122)
             {
-                mvprintw(14, 14, "BOMBA");
+               // mvprintw(14, 14, "BOMBA");
                 direccion = 5;
-                int x, y;
-                mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-             //   Tren *Temporal = new Tren("PRUEBA");
-                vector <string>listapos;
-                /*DERECHA */
-                listapos.push_back("2-5");
-                listapos.push_back("2-6");
-                listapos.push_back("2-7");
-                listapos.push_back("2-8");
-                /*ABAJO*/
-                listapos.push_back("3-8");
-                listapos.push_back("4-8");
-                listapos.push_back("5-8");
-                listapos.push_back("6-8");
-                listapos.push_back("7-8");
-                /*IZQUIERDA*/
-                listapos.push_back("7-7");
-                listapos.push_back("7-6");
-                listapos.push_back("7-5");
-                listapos.push_back("7-4");
-              
-                    mvprintw(14, 14, "entro!");
-                    Item *temp = new Item(5, 2, 4);
-                    for (int i = 0; i <listapos.size(); i++)
-                    {
-                        erase();
-                        x = getPX(listapos[i]);
-                        y = getPY(listapos[i]);
-                        Tablero->getMatrix()[x][y] = temp;
-                        for (int i = 0; i < 11; i++)
-                        {
-                            for (int j = 0; j < 13; j++)
-                            {
-                                char it = Tablero->getMatrix()[i][j]->toString().at(0);
-                                move(i + 1, j + 1);
-                                printw("%c", it);
-                                //usleep(1000000 / 3);
-                            }
-                            usleep(1000000 / 3);
-                        }
-                        refresh();
-                    }
                 
             }
             else
             {
                 direccion = 0;
-                int x, y;
-                mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-                Tren *Temporal = new Tren("PRUEBA");
-                vector<string> listapos;
-                /*DERECHA */
-                listapos.push_back("2-5");
-                listapos.push_back("2-6");
-                listapos.push_back("2-7");
-                listapos.push_back("2-8");
-                /*ABAJO*/
-                listapos.push_back("3-8");
-                listapos.push_back("4-8");
-                listapos.push_back("5-8");
-                listapos.push_back("6-8");
-                listapos.push_back("7-8");
-                /*IZQUIERDA*/
-                listapos.push_back("7-7");
-                listapos.push_back("7-6");
-                listapos.push_back("7-5");
-                listapos.push_back("7-4");
-                if (Temporal != NULL)
-                {
-                    mvprintw(14, 14, "entro!");
-                    Item *temp = new Item(5, 2, 4);
-                    for (int i = 0; i < listapos.size(); i++)
-                    {
-                        erase();
-                        x = getPX(listapos[i]);
-                        y = getPY(listapos[i]);
-                        Tablero->getMatrix()[x][y] = temp;
-                        for (int i = 0; i < 11; i++)
-                        {
-                            for (int j = 0; j < 13; j++)
-                            {
-                                char it = Tablero->getMatrix()[i][j]->toString().at(0);
-                                move(i + 1, j + 1);
-                                printw("%c", it);
-                                usleep(1000000);
-                            }
-                        }
-                        refresh();
-                    }
-                }
-                /* int x, y;
-               mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-                Tren *Temporal = dynamic_cast<Tren *>(Tablero);
-                Item *temp = new Item(5, Temporal->getiniciotren()[0], Temporal->getiniciotren()[1]);
-                for (int i = 0; i < Temporal->getlistapos().size(); i++)
-                {
-                    x = Temporal->getPX(Temporal->getlistapos()[i]);
-                    y = Temporal->getPY(Temporal->getlistapos()[i]);
-                    Tablero->getMatrix()[x][y] = temp;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        for (int j = 0; j < 13; j++)
-                        {
-                            char it = Tablero->getMatrix()[i][j]->toString().at(0);
-
-                            move(i + 1, j + 1);
-                            printw("%c", it);
-                            usleep(1000000/3);
-                        }
-                    }
-                }*/
+                
             }
                     echo();
                     if (direccion == 1)
@@ -588,12 +507,35 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 Item *temp2 = Tablero->getMatrix()[cx - 1][cy];
                                 Tablero->setMatrix(temp2, cx, cy);
                                 Tablero->setMatrix(temp, cx - 1, cy);
-                                //  mvprintw(5, 5, "moviendo");
-                                // moverbots(boot1);
-                                //moverbots(boot2);
-                                /* moverbots(boot3);
-                        moverbots(boot4);*/
                                 cx = cx - 1;
+                                if(cx==2&&cy==4&&T_escenario==2){
+                                    int x, y;
+                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+
+                                    if (Temporal != NULL)
+                                    {
+                                      //  mvprintw(14, 14, "entro!");
+                                        Item *temp = new Item(5, 2, 4);
+                                        for (int i = 0; i < listapos.size(); i++)
+                                        {
+                                            erase();
+                                            x = getPX(listapos[i]);
+                                            y = getPY(listapos[i]);
+                                            Tablero->getMatrix()[x][y] = temp;
+                                            for (int i = 0; i < 11; i++)
+                                            {
+                                                for (int j = 0; j < 13; j++)
+                                                {
+                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    move(i + 1, j + 1);
+                                                    printw("%c", it);
+                                                }
+                                                usleep(250000);
+                                            }
+                                            refresh();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -609,10 +551,36 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 Tablero->setMatrix(temp, cx, cy - 1);
                                 //  mvprintw(5, 5, "moviendo");
                                 moverbots(boot1);
-                                //moverbots(boot2);
-                                /* moverbots(boot3);
-                        moverbots(boot4);*/
                                 cy = cy - 1;
+                                if (cx == 2 && cy == 4 && T_escenario == 2)
+                                {
+                                    int x, y;
+                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+
+                                    if (Temporal != NULL)
+                                    {
+                                        //  mvprintw(14, 14, "entro!");
+                                        Item *temp = new Item(5, 2, 4);
+                                        for (int i = 0; i < listapos.size(); i++)
+                                        {
+                                            erase();
+                                            x = getPX(listapos[i]);
+                                            y = getPY(listapos[i]);
+                                            Tablero->getMatrix()[x][y] = temp;
+                                            for (int i = 0; i < 11; i++)
+                                            {
+                                                for (int j = 0; j < 13; j++)
+                                                {
+                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    move(i + 1, j + 1);
+                                                    printw("%c", it);
+                                                }
+                                                usleep(250000);
+                                            }
+                                            refresh();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -632,6 +600,35 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 /* moverbots(boot3);
                         moverbots(boot4);*/
                                 cy = cy + 1;
+                                if (cx == 2 && cy == 4 && T_escenario == 2)
+                                {
+                                    int x, y;
+                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+
+                                    if (Temporal != NULL)
+                                    {
+                                        //  mvprintw(14, 14, "entro!");
+                                        Item *temp = new Item(5, 2, 4);
+                                        for (int i = 0; i < listapos.size(); i++)
+                                        {
+                                            erase();
+                                            x = getPX(listapos[i]);
+                                            y = getPY(listapos[i]);
+                                            Tablero->getMatrix()[x][y] = temp;
+                                            for (int i = 0; i < 11; i++)
+                                            {
+                                                for (int j = 0; j < 13; j++)
+                                                {
+                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    move(i + 1, j + 1);
+                                                    printw("%c", it);
+                                                }
+                                                usleep(250000);
+                                            }
+                                            refresh();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -645,19 +642,43 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 Item *temp2 = Tablero->getMatrix()[cx + 1][cy];
                                 Tablero->setMatrix(temp2, cx, cy);
                                 Tablero->setMatrix(temp, cx + 1, cy);
-                                // mvprintw(5, 5, "moviendo");
-                                //moverbots(boot1);
-                                //moverbots(boot2);
-                                /* moverbots(boot3);
-                        moverbots(boot4);*/
-                                // moverbots(boot4);
+        
                                 cx = cx + 1;
+                                if (cx == 2 && cy == 4 && T_escenario == 2)
+                                {
+                                    int x, y;
+                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+
+                                    if (Temporal != NULL)
+                                    {
+                                        //  mvprintw(14, 14, "entro!");
+                                        Item *temp = new Item(5, 2, 4);
+                                        for (int i = 0; i < listapos.size(); i++)
+                                        {
+                                            erase();
+                                            x = getPX(listapos[i]);
+                                            y = getPY(listapos[i]);
+                                            Tablero->getMatrix()[x][y] = temp;
+                                            for (int i = 0; i < 11; i++)
+                                            {
+                                                for (int j = 0; j < 13; j++)
+                                                {
+                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    move(i + 1, j + 1);
+                                                    printw("%c", it);
+                                                }
+                                                usleep(250000);
+                                            }
+                                            refresh();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                     if (direccion == 5)
                     {
-                        mvprintw(1, 1, "BOMBA");
+                        mvprintw(14, 20, "BOOMBA!");
                         crearBomba();
                     }
                 }
@@ -957,6 +978,34 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
 
         void movertren()
         {
+            /*
+
+            int x, y;
+            mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+           
+            if (Temporal != NULL)
+            {
+                mvprintw(14, 14, "entro!");
+                Item *temp = new Item(5, 2, 4);
+                for (int i = 0; i < listapos.size(); i++)
+                {
+                    erase();
+                    x = getPX(listapos[i]);
+                    y = getPY(listapos[i]);
+                    Tablero->getMatrix()[x][y] = temp;
+                    for (int i = 0; i < 11; i++)
+                    {
+                        for (int j = 0; j < 13; j++)
+                        {
+                            char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                            move(i + 1, j + 1);
+                            printw("%c", it);
+                        }
+                        usleep(250000);
+                    }
+                    refresh();
+                }
+            }*/
         }
 
         int convertirNumero(char le)
