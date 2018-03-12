@@ -18,16 +18,15 @@
 #include "Tren.h"
 /*METODOS*/
 void salir();
+void Cargando();
+void EscenarioInvisible();
 int menu();
 int menu();
 int menu2();
 int menu3();
+int tipoBomba();
 string menunombre();
 string menunombre_escenario();
-int tipoBomba();
-void Cargando();
-void EscenarioInvisible();
-int tipobomba;
 void Juego(string, string, int);
 void crearBomba();
 Jugador *moverbots(Jugador *);
@@ -36,6 +35,7 @@ int getPX(string);
 int getPY(string);
 /*Variables globales*/
 int e;
+int tipobomba;
 Jugador *jugador;
 int T_escenario;
 Escenario *Tablero = NULL;
@@ -226,110 +226,111 @@ Jugador *moverbots(Jugador *Objeto)
     int y = Objeto->getY();
     if (x == 10)
     {
-        if (Tablero->getMatrix()[x - 1][y]->toString() == " ")
+        if (Tablero->TraerMatriz()[x - 1][y]->toString() == " ")
         {
             movimiento = true;
             Objeto->setX(x - 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            //Tablero->getMatrix()[x - 1][y] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+           
+            //Tablero->TraerMatriz()[x - 1][y] = boot1;
         }
     }
     else if (x - 1 >= 0)
     {
-        if (Tablero->getMatrix()[x - 1][y]->toString() == " ")
+        if (Tablero->TraerMatriz()[x - 1][y]->toString() == " ")
         {
             movimiento = true;
             Objeto->setX(x - 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            // Tablero->getMatrix()[x - 1][y] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            // Tablero->TraerMatriz()[x - 1][y] = boot1;
         }
     }
 
     if (!movimiento && x == 0)
     {
-        if (Tablero->getMatrix()[x + 1][y]->toString() == " ")
+        if (Tablero->TraerMatriz()[x + 1][y]->toString() == " ")
         {
             movimiento = true;
             Objeto->setX(x + 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            //Tablero->getMatrix()[x + 1][y] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            //Tablero->TraerMatriz()[x + 1][y] = boot1;
         }
     }
     else if (!movimiento && x + 1 <= 10)
     {
-        if (Tablero->getMatrix()[x + 1][y]->toString() == " ")
+        if (Tablero->TraerMatriz()[x + 1][y]->toString() == " ")
         {
             movimiento = true;
             Objeto->setX(x - 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            // Tablero->getMatrix()[x + 1][y] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            // Tablero->TraerMatriz()[x + 1][y] = boot1;
         }
     }
 
     /*MOVIMIENTOS DE LA Y*/
     if (!movimiento && (y == 12))
     {
-        if (Tablero->getMatrix()[x][y - 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][y - 1]->toString() == " ")
         {
             movimiento = true;
             Objeto->setY(y - 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            // Tablero->getMatrix()[x][y-1] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            // Tablero->TraerMatriz()[x][y-1] = boot1;
         }
     }
     else if (y - 1 >= 0)
     {
-        if (Tablero->getMatrix()[x][y - 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][y - 1]->toString() == " ")
         {
             movimiento = true;
             Objeto->setY(y - 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            //Tablero->getMatrix()[x][y - 1] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            //Tablero->TraerMatriz()[x][y - 1] = boot1;
         }
     }
 
     if (!movimiento && y == 0)
     {
-        if (Tablero->getMatrix()[x][y + 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][y + 1]->toString() == " ")
         {
             movimiento = true;
             Objeto->setY(y + 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            //Tablero->getMatrix()[x][y +1] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            //Tablero->TraerMatriz()[x][y +1] = boot1;
         }
     }
     else if (!movimiento && y + 1 <= 12)
     {
-        if (Tablero->getMatrix()[x][y + 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][y + 1]->toString() == " ")
         {
             movimiento = true;
             Objeto->setY(y + 1);
-            Item *temp = Tablero->getMatrix()[x][y];
-            Item *temp2 = Tablero->getMatrix()[Objeto->getX()][Objeto->getY()];
-            Tablero->setMatrix(temp2, x, y);
-            Tablero->setMatrix(temp, Objeto->getX(), Objeto->getY());
-            //  Tablero->getMatrix()[x][y + 1] = boot1;
+            Item *temp = Tablero->TraerMatriz()[x][y];
+            Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
+            Tablero->CambiarPosicion(temp2, x, y);
+            Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
+            //  Tablero->TraerMatriz()[x][y + 1] = boot1;
         }
     }
 }
@@ -337,12 +338,12 @@ Jugador *moverbots(Jugador *Objeto)
 void Juego(string Nombre, string nombre_escenario, int Vidas)
 {
     //Crear Jugador
-    Tablero->getMatrix()[0][0] = jugador;
+    Tablero->TraerMatriz()[0][0] = jugador;
     //Meterlos en la Matriz
-    Tablero->setMatrix(boot1, 10, 0);
-    Tablero->setMatrix(boot2, 0, 12);
-    Tablero->setMatrix(boot3, 10, 12);
-    Tablero->setMatrix(boot4, 5, 6);
+    Tablero->CambiarPosicion(boot1, 10, 0);
+    Tablero->CambiarPosicion(boot2, 0, 12);
+    Tablero->CambiarPosicion(boot3, 10, 12);
+    Tablero->CambiarPosicion(boot4, 5, 6);
 
     int x, y;
     int cx = 0;
@@ -401,13 +402,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
-                    if (Tablero->getMatrix()[i][j]->toString() == "Q")
+                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                    if (Tablero->TraerMatriz()[i][j]->toString() == "Q")
                     {
                         Normal *bomba;
-                        bomba = dynamic_cast<Normal *>(Tablero->getMatrix()[i][j]);
+                        bomba = dynamic_cast<Normal *>(Tablero->TraerMatriz()[i][j]);
                         bomba->setContador(bomba->getContador() - 1);
-                        Tablero->getMatrix()[i][j]->toString();
+                        Tablero->TraerMatriz()[i][j]->toString();
                         int alcance = bomba->getAlcance();
                         refresh();
                         if (bomba->getContador() == 0)
@@ -415,16 +416,16 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                             if (i - alcance >= 0)
                                 for (int k = 1; k <= alcance; k++)
                                 {
-                                    if (Tablero->getMatrix()[i - k][j]->toString() != "O")
-                                        Tablero->setMatrix(new Item(0, i - k, j), i - k, j);
+                                    if (Tablero->TraerMatriz()[i - k][j]->toString() != "O")
+                                        Tablero->CambiarPosicion(new Item(0, i - k, j), i - k, j);
                                     else
                                         k = 100;
                                 }
                             if (i + alcance <= 10)
                                 for (int k = 1; k <= alcance; k++)
                                 {
-                                    if (Tablero->getMatrix()[i + k][j]->toString() != "O")
-                                        Tablero->setMatrix(new Item(0, i + k, j), i + k, j);
+                                    if (Tablero->TraerMatriz()[i + k][j]->toString() != "O")
+                                        Tablero->CambiarPosicion(new Item(0, i + k, j), i + k, j);
                                     else
                                         k = 100;
                                 }
@@ -432,8 +433,8 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                             if (j - alcance >= 0)
                                 for (int k = 1; k <= alcance; k++)
                                 {
-                                    if (Tablero->getMatrix()[i][j - k]->toString() != "O")
-                                        Tablero->setMatrix(new Item(0, i, j - k), i, j - k);
+                                    if (Tablero->TraerMatriz()[i][j - k]->toString() != "O")
+                                        Tablero->CambiarPosicion(new Item(0, i, j - k), i, j - k);
                                     else
                                         k = 100;
                                 }
@@ -441,17 +442,17 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                             if (j + alcance <= 12)
                                 for (int k = 1; k <= alcance; k++)
                                 {
-                                    if (Tablero->getMatrix()[i][j + k]->toString() != "O")
-                                        Tablero->setMatrix(new Item(0, i, j + k), i, j + k);
+                                    if (Tablero->TraerMatriz()[i][j + k]->toString() != "O")
+                                        Tablero->CambiarPosicion(new Item(0, i, j + k), i, j + k);
                                     else
                                         k = 100;
                                 }
-                            Tablero->setMatrix(new Item(0, i, j), i, j);
+                            Tablero->CambiarPosicion(new Item(0, i, j), i, j);
                         }
                     }
                     move(i + 1, j + 1);
                     printw("%c", it);
-                    if (Tablero->getMatrix()[i][j]->toString() == "*")
+                    if (Tablero->TraerMatriz()[i][j]->toString() == "*")
                     {
                         cont = cont + 1;
                     }
@@ -460,7 +461,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
             if (cont == 0)
             {
                 vida = vida - 1;
-                Tablero->getMatrix()[cx][cy] = jugador;
+                Tablero->TraerMatriz()[cx][cy] = jugador;
             }
             refresh();
             tecla = getch();
@@ -501,13 +502,14 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     {
                         if (cx - 1 >= 0)
                         {
-                            if (Tablero->getMatrix()[cx - 1][cy]->toString() == " ")
+                            if (Tablero->TraerMatriz()[cx - 1][cy]->toString() == " ")
                             {
-                                Item *temp = Tablero->getMatrix()[cx][cy];
-                                Item *temp2 = Tablero->getMatrix()[cx - 1][cy];
-                                Tablero->setMatrix(temp2, cx, cy);
-                                Tablero->setMatrix(temp, cx - 1, cy);
+                                Item *temp = Tablero->TraerMatriz()[cx][cy];
+                                Item *temp2 = Tablero->TraerMatriz()[cx - 1][cy];
+                                Tablero->CambiarPosicion(temp2, cx, cy);
+                                Tablero->CambiarPosicion(temp, cx - 1, cy);
                                 cx = cx - 1;
+                                Tablero->generarBomba(tipobomba);
                                 if(cx==2&&cy==4&&T_escenario==2){
                                     int x, y;
                                    
@@ -520,12 +522,12 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                             erase();
                                             x = getPX(listapos[i]);
                                             y = getPY(listapos[i]);
-                                            Tablero->getMatrix()[x][y] = temp;
+                                            Tablero->TraerMatriz()[x][y] = temp;
                                             for (int i = 0; i < 11; i++)
                                             {
                                                 for (int j = 0; j < 13; j++)
                                                 {
-                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
                                                     mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
@@ -544,15 +546,16 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     {
                         if (cy - 1 >= 0)
                         {
-                            if (Tablero->getMatrix()[cx][cy - 1]->toString() == " ")
+                            if (Tablero->TraerMatriz()[cx][cy - 1]->toString() == " ")
                             {
-                                Item *temp = Tablero->getMatrix()[cx][cy];
-                                Item *temp2 = Tablero->getMatrix()[cx][cy - 1];
-                                Tablero->setMatrix(temp2, cx, cy);
-                                Tablero->setMatrix(temp, cx, cy - 1);
+                                Item *temp = Tablero->TraerMatriz()[cx][cy];
+                                Item *temp2 = Tablero->TraerMatriz()[cx][cy - 1];
+                                Tablero->CambiarPosicion(temp2, cx, cy);
+                                Tablero->CambiarPosicion(temp, cx, cy - 1);
                                 //  mvprintw(5, 5, "moviendo");
                                 moverbots(boot1);
                                 cy = cy - 1;
+                                Tablero->generarBomba(tipobomba);
                                 if (cx == 2 && cy == 4 && T_escenario == 2)
                                 {
                                     int x, y;
@@ -566,12 +569,12 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                             erase();
                                             x = getPX(listapos[i]);
                                             y = getPY(listapos[i]);
-                                            Tablero->getMatrix()[x][y] = temp;
+                                            Tablero->TraerMatriz()[x][y] = temp;
                                             for (int i = 0; i < 11; i++)
                                             {
                                                 for (int j = 0; j < 13; j++)
                                                 {
-                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
                                                     mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
@@ -590,12 +593,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     {
                         if (cy + 1 <= 12)
                         {
-                            if (Tablero->getMatrix()[cx][cy + 1]->toString() == " ")
+                            if (Tablero->TraerMatriz()[cx][cy + 1]->toString() == " ")
                             {
-                                Item *temp = Tablero->getMatrix()[cx][cy];
-                                Item *temp2 = Tablero->getMatrix()[cx][cy + 1];
-                                Tablero->setMatrix(temp2, cx, cy);
-                                Tablero->setMatrix(temp, cx, cy + 1);
+                                Item *temp = Tablero->TraerMatriz()[cx][cy];
+                                Item *temp2 = Tablero->TraerMatriz()[cx][cy + 1];
+                                Tablero->CambiarPosicion(temp2, cx, cy);
+                                Tablero->CambiarPosicion(temp, cx, cy + 1);
+                                Tablero->generarBomba(tipobomba);
                                 // mvprintw(5, 5, "moviendo");
                                 moverbots(boot1);
                                 //moverbots(boot2);
@@ -615,12 +619,12 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                             erase();
                                             x = getPX(listapos[i]);
                                             y = getPY(listapos[i]);
-                                            Tablero->getMatrix()[x][y] = temp;
+                                            Tablero->TraerMatriz()[x][y] = temp;
                                             for (int i = 0; i < 11; i++)
                                             {
                                                 for (int j = 0; j < 13; j++)
                                                 {
-                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
                                                     mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
@@ -639,13 +643,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     {
                         if (cx + 1 <= 10)
                         {
-                            if (Tablero->getMatrix()[cx + 1][cy]->toString() == " ")
+                            if (Tablero->TraerMatriz()[cx + 1][cy]->toString() == " ")
                             {
-                                Item *temp = Tablero->getMatrix()[cx][cy];
-                                Item *temp2 = Tablero->getMatrix()[cx + 1][cy];
-                                Tablero->setMatrix(temp2, cx, cy);
-                                Tablero->setMatrix(temp, cx + 1, cy);
-        
+                                Item *temp = Tablero->TraerMatriz()[cx][cy];
+                                Item *temp2 = Tablero->TraerMatriz()[cx + 1][cy];
+                                Tablero->CambiarPosicion(temp2, cx, cy);
+                                Tablero->CambiarPosicion(temp, cx + 1, cy);
+                                Tablero->generarBomba(tipobomba);
                                 cx = cx + 1;
                                 if (cx == 2 && cy == 4 && T_escenario == 2)
                                 {
@@ -662,12 +666,12 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                             erase();
                                             x = getPX(listapos[i]);
                                             y = getPY(listapos[i]);
-                                            Tablero->getMatrix()[x][y] = temp;
+                                            Tablero->TraerMatriz()[x][y] = temp;
                                             for (int i = 0; i < 11; i++)
                                             {
                                                 for (int j = 0; j < 13; j++)
                                                 {
-                                                    char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
                                                     mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
@@ -705,80 +709,80 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    if (Tablero->getMatrix()[i][j]->toString() == "*")
+                    if (Tablero->TraerMatriz()[i][j]->toString() == "*")
                     {
                         if (j + 1 <= 12)
                         {
-                            if (Tablero->getMatrix()[i][j + 1]->toString() == " ")
+                            if (Tablero->TraerMatriz()[i][j + 1]->toString() == " ")
                             {
                                 if (tipobomba == 1)
                                 {
-                                    Tablero->setMatrix(new Normal(1, i, j + 1, 4), i, j + 1);
+                                    Tablero->CambiarPosicion(new Normal(1, i, j + 1, 4), i, j + 1);
                                 }
                                 if (tipobomba == 2)
                                 {
-                                    Tablero->setMatrix(new Espina(1, i, j + 1, 4, 0), i, j + 1);
+                                    Tablero->CambiarPosicion(new Espina(1, i, j + 1, 4, 0), i, j + 1);
                                 }
                                 if (tipobomba == 3)
                                 {
-                                    Tablero->setMatrix(new V(1, i, j + 1, 4), i, j + 1);
+                                    Tablero->CambiarPosicion(new V(1, i, j + 1, 4), i, j + 1);
                                 }
                                 break;
                             }
                         }
                         if (i + 1 <= 10)
                         {
-                            if (Tablero->getMatrix()[i + 1][j]->toString() == " ")
+                            if (Tablero->TraerMatriz()[i + 1][j]->toString() == " ")
                             {
                                 if (tipobomba == 1)
                                 {
-                                    Tablero->setMatrix(new Normal(1, i + 1, j, 4), i + 1, j);
+                                    Tablero->CambiarPosicion(new Normal(1, i + 1, j, 4), i + 1, j);
                                 }
                                 if (tipobomba == 2)
                                 {
-                                    Tablero->setMatrix(new Espina(1, i + 1, j, 4, 0), i + 1, j);
+                                    Tablero->CambiarPosicion(new Espina(1, i + 1, j, 4, 0), i + 1, j);
                                 }
                                 if (tipobomba == 3)
                                 {
-                                    Tablero->setMatrix(new V(1, i + 1, j, 4), i + 1, j);
+                                    Tablero->CambiarPosicion(new V(1, i + 1, j, 4), i + 1, j);
                                 }
                                 break;
                             }
                         }
                         if (j - 1 >= 0)
                         {
-                            if (Tablero->getMatrix()[i][j - 1]->toString() == " ")
+                            if (Tablero->TraerMatriz()[i][j - 1]->toString() == " ")
                             {
                                 if (tipobomba == 1)
                                 {
-                                    Tablero->setMatrix(new Normal(1, i, j - 1, 4), i, j - 1);
+                                    Tablero->CambiarPosicion(new Normal(1, i, j - 1, 4), i, j - 1);
                                 }
                                 if (tipobomba == 2)
                                 {
-                                    Tablero->setMatrix(new Espina(1, i, j - 1, 4, 0), i, j - 1);
+                                    Tablero->CambiarPosicion(new Espina(1, i, j - 1, 4, 0), i, j - 1);
                                 }
                                 if (tipobomba == 3)
                                 {
-                                    Tablero->setMatrix(new V(1, i, j - 1, 4), i, j - 1);
+                                    Tablero->CambiarPosicion(new V(1, i, j - 1, 4), i, j - 1);
                                 }
                                 break;
                             }
                         }
                         if (i - 1 >= 0)
                         {
-                            if (Tablero->getMatrix()[i - 1][j]->toString() == " ")
+                            if (Tablero->TraerMatriz()[i - 1][j]->toString() == " ")
                             {
                                 if (tipobomba == 1)
                                 {
-                                    Tablero->setMatrix(new Normal(1, i - 1, j, 4), i - 1, j);
+                                    Tablero->CambiarPosicion(new Normal(1, i - 1, j, 4), i - 1, j);
                                 }
                                 if (tipobomba == 2)
                                 {
-                                    Tablero->setMatrix(new Espina(1, i - 1, j, 4, 0), i - 1, j);
+                                    Tablero->CambiarPosicion(new Espina(1, i - 1, j, 4, 0), i - 1, j);
                                 }
                                 if (tipobomba == 3)
                                 {
-                                    Tablero->setMatrix(new V(1, i - 1, j, 4), i - 1, j);
+                                    Tablero->CambiarPosicion(new V(1, i - 1, j, 4), i - 1, j);
                                 }
                                 break;
                             }
@@ -999,12 +1003,12 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     erase();
                     x = getPX(listapos[i]);
                     y = getPY(listapos[i]);
-                    Tablero->getMatrix()[x][y] = temp;
+                    Tablero->TraerMatriz()[x][y] = temp;
                     for (int i = 0; i < 11; i++)
                     {
                         for (int j = 0; j < 13; j++)
                         {
-                            char it = Tablero->getMatrix()[i][j]->toString().at(0);
+                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                             move(i + 1, j + 1);
                             printw("%c", it);
                         }
@@ -1076,46 +1080,46 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
         }
 
         /*
-boot1->Inteligenciaartificial(boot1->getX(), boot1->getY(), Tablero->getMatrix());
-Tablero->getMatrix()[boot1->getX()][boot1->getY()];
+boot1->Inteligenciaartificial(boot1->getX(), boot1->getY(), Tablero->TraerMatriz());
+Tablero->TraerMatriz()[boot1->getX()][boot1->getY()];
 int x = boot1->getX();
 int y = boot1->getY();
 bool movimiento = false;
 if (x == 10)
 {
 
-    if (Tablero->getMatrix()[x - 1][boot1->getY()]->toString() == " ")
+    if (Tablero->TraerMatriz()[x - 1][boot1->getY()]->toString() == " ")
     {
         boot1->setX(x - 1);
-        Tablero->getMatrix()[x - 1][boot1->getY()] = boot1;
+        Tablero->TraerMatriz()[x - 1][boot1->getY()] = boot1;
         movimiento = true;
     }
 }
 else if (x == 0)
 {
-    if (Tablero->getMatrix()[x + 1][boot1->getY()]->toString() == " ")
+    if (Tablero->TraerMatriz()[x + 1][boot1->getY()]->toString() == " ")
     {
         boot1->setX(x + 1);
-        Tablero->getMatrix()[x + 1][boot1->getY()] = boot1;
+        Tablero->TraerMatriz()[x + 1][boot1->getY()] = boot1;
         movimiento = true;
     }
 }
 else if (x - 1 >= 0)
 {
-    if (Tablero->getMatrix()[x - 1][boot1->getY()]->toString() == " ")
+    if (Tablero->TraerMatriz()[x - 1][boot1->getY()]->toString() == " ")
     {
         boot1->setX(x - 1);
-        Tablero->getMatrix()[x - 1][boot1->getY()] = boot1;
+        Tablero->TraerMatriz()[x - 1][boot1->getY()] = boot1;
         movimiento = true;
     }
 }
 else if (x + 1 <= 10)
 {
-    if (Tablero->getMatrix()[x + 1][boot1->getY()]->toString() == " ")
+    if (Tablero->TraerMatriz()[x + 1][boot1->getY()]->toString() == " ")
     {
 
         boot1->setX(x + 1);
-        Tablero->getMatrix()[x + 1][boot1->getY()] = boot1;
+        Tablero->TraerMatriz()[x + 1][boot1->getY()] = boot1;
         movimiento = true;
     }
 }
@@ -1124,34 +1128,34 @@ if (!movimiento)
     if (y == 12)
     {
 
-        if (Tablero->getMatrix()[x][boot1->getY() - 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][boot1->getY() - 1]->toString() == " ")
         {
             boot1->setY(y - 1);
-            Tablero->getMatrix()[x][y - 1] = boot1;
+            Tablero->TraerMatriz()[x][y - 1] = boot1;
         }
     }
     else if (y == 0)
     {
-        if (Tablero->getMatrix()[x][boot1->getY() + 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][boot1->getY() + 1]->toString() == " ")
         {
             boot1->setY(y + 1);
-            Tablero->getMatrix()[x][y + 1] = boot1;
+            Tablero->TraerMatriz()[x][y + 1] = boot1;
         }
     }
     else if (y - 1 >= 0)
     {
-        if (Tablero->getMatrix()[x][boot1->getY() - 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][boot1->getY() - 1]->toString() == " ")
         {
             boot1->setY(y - 1);
-            Tablero->getMatrix()[x][y - 1] = boot1;
+            Tablero->TraerMatriz()[x][y - 1] = boot1;
         }
     }
     else if (y + 1 <= 12)
     {
-        if (Tablero->getMatrix()[x][boot1->getY() + 1]->toString() == " ")
+        if (Tablero->TraerMatriz()[x][boot1->getY() + 1]->toString() == " ")
         {
             boot1->setY(y + 1);
-            Tablero->getMatrix()[x][y + 1] = boot1;
+            Tablero->TraerMatriz()[x][y + 1] = boot1;
         }
     }
 }
@@ -1159,17 +1163,17 @@ if (!movimiento)
 
         /* int bx = boot1->getX();
     int by = boot1->getY();
-    boot1->Inteligenciaartificial(bx, by,Tablero->getMatrix());
+    boot1->Inteligenciaartificial(bx, by,Tablero->TraerMatriz());
     int b2x = boot2->getX();
     int b2y = boot2->getY();
-    boot1->Inteligenciaartificial(bx, by, Tablero->getMatrix());
+    boot1->Inteligenciaartificial(bx, by, Tablero->TraerMatriz());
     int b3x = boot3->getX();
     int b3y = boot3->getY();
-    boot1->Inteligenciaartificial(bx, by, Tablero->getMatrix());
+    boot1->Inteligenciaartificial(bx, by, Tablero->TraerMatriz());
     int b4x = boot4->getX();
     int b4y = boot4->getY();
 
-    Tablero->setMatrix(boot1,boot1->getX(),boot1->getY());
-    Tablero->setMatrix(boot2, boot2->getX(), boot2->getY());
-    Tablero->setMatrix(boot3, boot3->getX(), boot3->getY());
-    Tablero->setMatrix(boot4, boot4->getX(), boot4->getY());*/
+    Tablero->CambiarPosicion(boot1,boot1->getX(),boot1->getY());
+    Tablero->CambiarPosicion(boot2, boot2->getX(), boot2->getY());
+    Tablero->CambiarPosicion(boot3, boot3->getX(), boot3->getY());
+    Tablero->CambiarPosicion(boot4, boot4->getX(), boot4->getY());*/

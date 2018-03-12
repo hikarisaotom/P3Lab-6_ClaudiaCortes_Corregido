@@ -39,7 +39,7 @@ Escenario::Escenario(string nombre)
     }
 }
 
-Item ***Escenario::getMatrix()
+Item ***Escenario::TraerMatriz()
 {
     return Matriz;
 }
@@ -49,7 +49,7 @@ string Escenario::getNombre()
     return nombre;
 }
 
-void Escenario::setMatrix(Item *elemento, int i, int j)
+void Escenario::CambiarPosicion(Item *elemento, int i, int j)
 {
     Matriz[i][j] = elemento;
 }
@@ -68,4 +68,44 @@ Escenario::~Escenario()
     }
     delete[] Matriz;
     Matriz = NULL;
+}
+void Escenario::generarBomba(int Bomba_tipo)
+{
+  
+    bool bandera = true;
+    while (bandera)
+    {
+        int i = (rand() % 10);
+        int j = (rand() % 12);
+        if ((i <= 10 && i >= 0) && (j <= 12 && j >= 0))
+        {
+            Item *Valor_Cambiar = Matriz[i][j];
+            if (Valor_Cambiar->toString() == " ")
+            {
+                Bombas *Bomba_Temp;
+                switch (Bomba_tipo)
+                {
+                case 1:
+                {
+                    Bomba_Temp = new Normal(1, i, j, 4);
+                    break;
+                }
+                case 2:
+                {
+                    Bomba_Temp = new Espina(1, i, j, 4, 0);
+                    break;
+                }
+
+                case 3:
+                {
+                    Bomba_Temp = new V(1, i, j, 4);
+                    break;
+                }
+                }
+                Matriz[i][j] = Bomba_Temp;
+                bandera = false;
+                break;
+            }
+        }
+    }
 }

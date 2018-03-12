@@ -19,8 +19,9 @@ class Escenario
   public:
     Escenario(string);
     virtual string getNombre();
-    void setMatrix(Item*, int, int);
-    Item*** getMatrix();
+    void CambiarPosicion(Item *, int, int);
+    Item*** TraerMatriz();
+    void generarBomba(int);
     ~Escenario();
 };
 #endif
