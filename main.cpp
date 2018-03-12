@@ -333,6 +333,7 @@ Jugador *moverbots(Jugador *Objeto)
 
 void Partida(string Nombre, string nombre_escenario, int Vidas)
 {
+    string simbolo="";
     //Crear Jugador
     Tablero->TraerMatriz()[0][0] = jugador;
     //Meterlos en la Matriz
@@ -345,11 +346,23 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
     int P_X = 0;
     int P_Y = 0;
     Tren *Temporal;
+    if(tipobomba==1){
+        simbolo="Q";
+    }
+    else if (tipobomba == 2)
+    {
+        simbolo = "0";
+    }
+    else if (tipobomba == 1)
+    {
+        simbolo = "x";
+    }
+
     getmaxyx(stdscr, y, x);
     move(y / 2, x / 2 - 18);
     int tecla;
     int direccion;
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_WHITE, COLOR_BLACK);
     attron(COLOR_PAIR(2));
     refresh();
     curs_set(0);
@@ -405,16 +418,6 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                        Tablero->Explotar(i, j, tipobomba);
 
                     }
-                   /* if (Tablero->TraerMatriz()[i][j]->toString() == "0")
-                    {
-                        Tablero->Explotar(i, j, tipobomba);
-                    }
-
-                    if (Tablero->TraerMatriz()[i][j]->toString() == "x")
-                    {
-                        Tablero->Explotar(i, j, tipobomba);
-                    }*/
-
                     move(i + 1, j + 1);
                     printw(Tablero->TraerMatriz()[i][j]->toString().c_str());
                     if (Tablero->TraerMatriz()[i][j]->toString() == "*")
@@ -472,6 +475,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                         Tablero->CambiarPosicion(temp2, P_X, P_Y);
                         Tablero->CambiarPosicion(temp, P_X - 1, P_Y);
                         P_X = P_X - 1;
+                        Tablero->moverboot();
                         Tablero->generarBomba(tipobomba);
                         if (P_X == 2 && P_Y == 4 && T_escenario == 2)
                         {
@@ -481,11 +485,13 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                             {
                                 //  mvprintw(14, 14, "entro!");
                                 Item *temp = new Item(5, 2, 4);
-                                for (int i = 0; i < listapos.size(); i++)
+                                for (int i = 0; i < listapos.size()-1; i++)
                                 {
                                     erase();
                                     x = getPX(listapos[i]);
                                     y = getPY(listapos[i]);
+                                    delete Tablero->TraerMatriz()[x][y];
+                                    Tablero->TraerMatriz()[x][y] = NULL;
                                     Tablero->TraerMatriz()[x][y] = temp;
                                     for (int i = 0; i < 11; i++)
                                     {
@@ -498,11 +504,14 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                         }
                                         usleep(250000);
                                     }
+                                    //
                                     refresh();
                                 }
+                                //Tablero->limpiarTren(listapos);
                                 erase();
                             }
                         }
+                        //mvprintw(14, 20, "SALE2!");
                     }
                 }
             }
@@ -519,6 +528,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                         //  mvprintw(5, 5, "moviendo");
                         moverbots(boot1);
                         P_Y = P_Y - 1;
+                        Tablero->moverboot();
                         Tablero->generarBomba(tipobomba);
                         if (P_X == 2 && P_Y == 4 && T_escenario == 2)
                         {
@@ -533,7 +543,9 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                     erase();
                                     x = getPX(listapos[i]);
                                     y = getPY(listapos[i]);
-                                    Tablero->TraerMatriz()[x][y] = temp;
+                                    delete Tablero->TraerMatriz()[x][y];
+                                    Tablero->TraerMatriz()[x][y]=NULL;
+                                     Tablero->TraerMatriz()[x][y] = temp;
                                     for (int i = 0; i < 11; i++)
                                     {
                                         for (int j = 0; j < 13; j++)
@@ -545,10 +557,13 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                         }
                                         usleep(250000);
                                     }
+                                    //
                                     refresh();
                                 }
+                                
                                 erase();
                             }
+                           //
                         }
                     }
                 }
@@ -563,10 +578,11 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                         Item *temp2 = Tablero->TraerMatriz()[P_X][P_Y + 1];
                         Tablero->CambiarPosicion(temp2, P_X, P_Y);
                         Tablero->CambiarPosicion(temp, P_X, P_Y + 1);
+                        Tablero->moverboot();
                         Tablero->generarBomba(tipobomba);
                         // mvprintw(5, 5, "moviendo");
                         moverbots(boot1);
-                        //moverbots(boot2);
+                        moverbots(boot2);
                         /* moverbots(boot3);
                         moverbots(boot4);*/
                         P_Y = P_Y + 1;
@@ -583,6 +599,9 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                     erase();
                                     x = getPX(listapos[i]);
                                     y = getPY(listapos[i]);
+                                    delete Tablero->TraerMatriz()[x][y];
+                                    Tablero->TraerMatriz()[x][y] = NULL;
+                                    Tablero->TraerMatriz()[x][y] = temp;
                                     Tablero->TraerMatriz()[x][y] = temp;
                                     for (int i = 0; i < 11; i++)
                                     {
@@ -595,11 +614,13 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                         }
                                         usleep(250000);
                                     }
+                                    //
                                     refresh();
                                 }
                                 erase();
                             }
                         }
+                       //
                     }
                 }
             }
@@ -628,6 +649,9 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                     erase();
                                     x = getPX(listapos[i]);
                                     y = getPY(listapos[i]);
+                                    delete Tablero->TraerMatriz()[x][y];
+                                    Tablero->TraerMatriz()[x][y] = NULL;
+                                    Tablero->TraerMatriz()[x][y] = temp;
                                     Tablero->TraerMatriz()[x][y] = temp;
                                     for (int i = 0; i < 11; i++)
                                     {
@@ -640,11 +664,14 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                         }
                                         usleep(250000);
                                     }
+                                    ////
                                     refresh();
                                 }
+                             // //
                                 erase();
                             }
                         }
+                       
                     }
                 }
             }

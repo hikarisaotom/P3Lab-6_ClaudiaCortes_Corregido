@@ -351,6 +351,67 @@ void Escenario::V_Explote(int i, int j){
     }
 }
 
-void Escenario::limpiarTren(){
-    
+void Escenario::limpiarTren(vector<string> listapos){
+
+}
+
+void Escenario::moverboot(){
+    for (int cx = 0; cx < 11; cx++)
+    {
+        for (int cy = 0; cy < 13; cy++)
+        {
+            if (Matriz[cx][cy]->toString() == "M")
+            {
+                int num = 1 + (rand() % 4);
+                if (num == 1 && cx - 1 >= 0)
+                {
+                    if (Matriz[cx - 1][cy]->toString() == " ")
+                    {
+                        Item *temp = Matriz[cx][cy];
+                        Item *temp2 = Matriz[cx - 1][cy];
+                       Matriz[cx][cy]=temp2;
+                      Matriz[cx-1][cy]=temp;
+                        cy = 100;
+                    }
+                    //break;
+                }
+                if (num == 4 && cy + 1 <= 12)
+                {
+                    if (Matriz[cx][cy + 1]->toString() == " ")
+                    {
+                        Item *temp = Matriz[cx][cy];
+                        Item *temp2 = Matriz[cx][cy + 1];
+                       Matriz[cx][cy]=temp2;
+                        Matriz[cx][cy+1]=temp;
+                        cy = 100;
+                    }
+                    //break;
+                }
+                if (num == 2 && cy - 1 >= 0)
+                {
+                    if (Matriz[cx][cy - 1]->toString() == " ")
+                    {
+                        Item *temp = Matriz[cx][cy];
+                        Item *temp2 = Matriz[cx][cy - 1];
+                        Matriz[cx][cy]=temp2;
+                       Matriz[cx][cy-1]=temp;
+                        cy = 100;
+                    }
+                    //break;
+                }
+                if (num == 3 && cx + 1 <= 10)
+                {
+                    if (Matriz[cx + 1][cy]->toString() == " ")
+                    {
+                        Item *temp = Matriz[cx][cy];
+                        Item *temp2 = Matriz[cx + 1][cy];
+                        Matriz[cx][cy]=temp2;
+                       Matriz[cx + 1][cy]=temp;
+                        cy = 100;
+                    }
+                    //break;
+                }
+            }
+        }
+    }
 }

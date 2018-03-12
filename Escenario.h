@@ -28,7 +28,9 @@ class Escenario
     void generarBomba(int);
     void Explotar(int,int,int);
     void V_Explote(int,int);
-    void limpiarTren();
+    void moverboot();
+    void limpiarTren(vector <string>);
+
     ~Escenario();
 };
 
