@@ -29,6 +29,6 @@ Normal::~Normal()
 
 string Normal::toString()
 {
-    simbolo = "Q";
+    simbolo = "N";
     return simbolo;
 }
