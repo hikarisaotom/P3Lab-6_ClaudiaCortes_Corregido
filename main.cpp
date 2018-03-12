@@ -510,8 +510,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 cx = cx - 1;
                                 if(cx==2&&cy==4&&T_escenario==2){
                                     int x, y;
-                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-
+                                   
                                     if (Temporal != NULL)
                                     {
                                       //  mvprintw(14, 14, "entro!");
@@ -529,11 +528,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                                     char it = Tablero->getMatrix()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
+                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                                 }
                                                 usleep(250000);
                                             }
                                             refresh();
                                         }
+                                        erase();
                                     }
                                 }
                             }
@@ -555,8 +556,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 if (cx == 2 && cy == 4 && T_escenario == 2)
                                 {
                                     int x, y;
-                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-
+                                  
                                     if (Temporal != NULL)
                                     {
                                         //  mvprintw(14, 14, "entro!");
@@ -574,11 +574,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                                     char it = Tablero->getMatrix()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
+                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                                 }
                                                 usleep(250000);
                                             }
                                             refresh();
                                         }
+                                        erase();
                                     }
                                 }
                             }
@@ -603,8 +605,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 if (cx == 2 && cy == 4 && T_escenario == 2)
                                 {
                                     int x, y;
-                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-
+                                   
                                     if (Temporal != NULL)
                                     {
                                         //  mvprintw(14, 14, "entro!");
@@ -622,11 +623,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                                     char it = Tablero->getMatrix()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
+                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                                 }
                                                 usleep(250000);
                                             }
                                             refresh();
                                         }
+                                        erase();
                                     }
                                 }
                             }
@@ -647,7 +650,8 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                 if (cx == 2 && cy == 4 && T_escenario == 2)
                                 {
                                     int x, y;
-                                    mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
+                                  
+                                   
 
                                     if (Temporal != NULL)
                                     {
@@ -666,11 +670,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                                                     char it = Tablero->getMatrix()[i][j]->toString().at(0);
                                                     move(i + 1, j + 1);
                                                     printw("%c", it);
+                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                                 }
                                                 usleep(250000);
                                             }
                                             refresh();
                                         }
+                                        erase();
                                     }
                                 }
                             }
@@ -680,12 +686,13 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                     {
                         mvprintw(14, 20, "BOOMBA!");
                         crearBomba();
+                        erase();
                     }
                 }
             }
             attroff(COLOR_PAIR(2));
             move(y / 2, (x / 2 - 4));
-            printw("Perdió!!");
+            printw("Lo siento, ha perido....");
             refresh();
             usleep(1000000 / 2);
             curs_set(1);

@@ -58,7 +58,7 @@ string Item::toString()
     if (tipo == 1)
         return "O";
     else if(tipo==5)
-    return "X";
+    return "x";
     else
         return " ";
 }
