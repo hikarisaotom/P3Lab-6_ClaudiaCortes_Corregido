@@ -71,7 +71,6 @@ Escenario::~Escenario()
 }
 void Escenario::generarBomba(int Bomba_tipo)
 {
-  
     bool bandera = true;
     while (bandera)
     {
@@ -103,9 +102,112 @@ void Escenario::generarBomba(int Bomba_tipo)
                 }
                 }
                 Matriz[i][j] = Bomba_Temp;
+                listaBombas.push_back(Bomba_Temp);
                 bandera = false;
                 break;
             }
         }
     }
+}
+
+void Escenario::CrearBomba(int tipobomba)
+{
+    Bombas *Bomba_Temp;
+    for (int i = 0; i < 11; i++)
+    {
+        for (int j = 0; j < 13; j++)
+        {
+            if (Matriz[i][j]->toString() == "*")
+            {
+                if (j + 1 <= 12)
+                {
+                    if (Matriz[i][j + 1]->toString() == " ")
+                    {
+                        if (tipobomba == 1)
+                        {
+                            Bomba_Temp = new Normal(1, i, j + 1, 4);
+                        }
+                        if (tipobomba == 2)
+                        {
+                            Bomba_Temp = new Espina(1, i, j + 1, 4, 0);
+                        }
+                        if (tipobomba == 3)
+                        {
+                            Bomba_Temp = new V(1, i, j + 1, 4);
+                        }
+                        Matriz[i][j + 1] = Bomba_Temp;
+                        listaBombas.push_back(Bomba_Temp);
+                         break;
+                    }
+                }
+                if (i + 1 <= 10)
+                {
+                    if (Matriz[i + 1][j]->toString() == " ")
+                    {
+                        if (tipobomba == 1)
+                        {
+                            Bomba_Temp = new Normal(1, i + 1, j, 4);
+                        }
+                        if (tipobomba == 2)
+                        {
+                            Bomba_Temp= new Espina(1, i + 1, j, 4, 0);
+                        }
+                        if (tipobomba == 3)
+                        {
+                           Bomba_Temp = new V(1, i + 1, j, 4);
+                        }
+                        Matriz[i + 1][j]=Bomba_Temp;
+                         listaBombas.push_back(Bomba_Temp);
+                        break;
+                    }
+                }
+                if (j - 1 >= 0)
+                {
+                    if (Matriz[i][j - 1]->toString() == " ")
+                    {
+                        if (tipobomba == 1)
+                        {
+                            Bomba_Temp = new Normal(1, i, j - 1, 4);
+                        }
+                        if (tipobomba == 2)
+                        {
+                            Bomba_Temp = new Espina(1, i, j - 1, 4, 0);
+                        }
+                        if (tipobomba == 3)
+                        {
+                           Bomba_Temp = new V(1, i, j - 1, 4);
+                        }
+                        Matriz[i][j - 1] = Bomba_Temp;
+                        listaBombas.push_back(Bomba_Temp);
+                        break;
+                    }
+                }
+                if (i - 1 >= 0)
+                {
+                    if (Matriz[i - 1][j]->toString() == " ")
+                    {
+                        if (tipobomba == 1)
+                        {
+                            Bomba_Temp = new Normal(1, i - 1, j, 4);
+                        }
+                        if (tipobomba == 2)
+                        {
+                            Bomba_Temp = new Espina(1, i - 1, j, 4, 0);
+                        }
+                        if (tipobomba == 3)
+                        {
+                            Bomba_Temp = new V(1, i - 1, j, 4);
+                        }
+                        Matriz[i - 1][j]=Bomba_Temp;
+                        listaBombas.push_back(Bomba_Temp);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Escenario::Explotar(Bombas *Bomba_Explotar)
+{
 }

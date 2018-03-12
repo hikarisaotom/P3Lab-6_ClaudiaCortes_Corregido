@@ -19,22 +19,18 @@
 /*METODOS*/
 void salir();
 void Cargando();
-void EscenarioInvisible();
-int menu();
-int menu();
-int menu2();
-int menu3();
-int tipoBomba();
-string menunombre();
-string menunombre_escenario();
-void Juego(string, string, int);
-void crearBomba();
-Jugador *moverbots(Jugador *);
+int menu();                    //Principal.
+int menu2();                   //Tipo de Escenario
+int menu3();                   //Tipo de Persona
+string menunombre();           //Nombre de la persona
+string menunombre_escenario(); //NOmbre del escenario
+void Partida(string, string, int);
 int convertirNumero(char);
 int getPX(string);
 int getPY(string);
+Jugador *moverbots(Jugador *);
 /*Variables globales*/
-int e;
+//int e;
 int tipobomba;
 Jugador *jugador;
 int T_escenario;
@@ -55,7 +51,7 @@ int main(void)
     case 1:
     {
         escenario = menu2();
-        T_escenario=escenario;
+        T_escenario = escenario;
         tipobomba = menu3();
         string Nombre = menunombre();
         string nombre_escenario = menunombre_escenario();
@@ -70,16 +66,16 @@ int main(void)
             Tablero = new Invisible(nombre_escenario, tipobomba);
             Cargando();
             erase();
-            Juego(Nombre, nombre_escenario, vida);
+            Partida(Nombre, nombre_escenario, vida);
         }
         else
         { //EL otro
             Tablero = new Tren(nombre_escenario);
-            Temporal=new Tren(nombre_escenario);
-            
+            Temporal = new Tren(nombre_escenario);
+
             Cargando();
             erase();
-            Juego(Nombre, nombre_escenario, -1);
+            Partida(Nombre, nombre_escenario, -1);
         }
 
         break;
@@ -109,16 +105,16 @@ int menu()
         move(1, 0);
         printw("Seleccione una opcion :\n");
         move(2, 1);
-        printw("1)Iniciar Juego\n");
+        printw("1)Iniciar Partida\n");
         move(3, 1);
         printw("2) Salir \n");
         printw("Usted selecciono: ");
         attroff(COLOR_PAIR(2));
     }
-    int cx = 0;
-    int cy = 2;
+    int P_X = 0;
+    int P_Y = 2;
     int tecla;
-    move(cy, cx);
+    move(P_Y, P_X);
     refresh();
     while (true)
     {
@@ -126,27 +122,27 @@ int menu()
         tecla = getch();
         if (tecla == 10)
         {
-            if (cy == 2)
+            if (P_Y == 2)
             {
                 return 1;
             }
-            if (cy == 3)
+            if (P_Y == 3)
             {
                 return 2;
             }
         }
         else
         {
-            if (tecla == 65 && cy > 2)
+            if (tecla == 65 && P_Y > 2)
             {
                 //printw(" arriba");
-                cy = cy - 1;
-                move(cy, cx);
+                P_Y = P_Y - 1;
+                move(P_Y, P_X);
             }
-            else if (tecla == 66 && cy <= 4)
+            else if (tecla == 66 && P_Y <= 4)
             {
-                cy = cy + 1;
-                move(cy, cx);
+                P_Y = P_Y + 1;
+                move(P_Y, P_X);
             }
             else
             {
@@ -198,7 +194,7 @@ void Cargando()
     if (has_colors)
     {
         start_color();
-        init_pair(1, COLOR_GREEN, COLOR_BLACK);
+        init_pair(1, COLOR_WHITE, COLOR_BLACK);
         attron(COLOR_PAIR(1));
         move(y / 2, 15);
         printw("Espere mientras cargamos los elementos :3 ");
@@ -234,7 +230,7 @@ Jugador *moverbots(Jugador *Objeto)
             Item *temp2 = Tablero->TraerMatriz()[Objeto->getX()][Objeto->getY()];
             Tablero->CambiarPosicion(temp2, x, y);
             Tablero->CambiarPosicion(temp, Objeto->getX(), Objeto->getY());
-           
+
             //Tablero->TraerMatriz()[x - 1][y] = boot1;
         }
     }
@@ -335,7 +331,7 @@ Jugador *moverbots(Jugador *Objeto)
     }
 }
 
-void Juego(string Nombre, string nombre_escenario, int Vidas)
+void Partida(string Nombre, string nombre_escenario, int Vidas)
 {
     //Crear Jugador
     Tablero->TraerMatriz()[0][0] = jugador;
@@ -346,20 +342,20 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
     Tablero->CambiarPosicion(boot4, 5, 6);
 
     int x, y;
-    int cx = 0;
-    int cy = 0;
+    int P_X = 0;
+    int P_Y = 0;
     Tren *Temporal;
     getmaxyx(stdscr, y, x);
     move(y / 2, x / 2 - 18);
     int tecla;
     int direccion;
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_WHITE, COLOR_BLACK);
     attron(COLOR_PAIR(2));
     refresh();
     curs_set(0);
     vector<string> listapos;
-    if (T_escenario==2)
-    {//ES EL ESCENARIO DEL TREN
+    if (T_escenario == 2)
+    { //ES EL ESCENARIO DEL TREN
         Temporal = new Tren("PRUEBA");
         /*DERECHA */
         listapos.push_back("2-5");
@@ -384,10 +380,10 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
         mvprintw(0, 24, Nombre.c_str());
         mvprintw(0, 34, "-> Escenario: ");
         mvprintw(0, 43, nombre_escenario.c_str());
-        move(cy, cx);
-        if (Vidas > 0)
+        move(P_Y, P_X);
+        if (vida > 0)
         {
-            mvprintw(0, 52, "-> Vidas <3 : %d", Vidas);
+            mvprintw(0, 52, "-> Vidas <3 : %d", vida);
         }
         if (vida == 0)
         {
@@ -396,7 +392,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
         }
         noecho();
         int cont = 0;
-        if ((cx >= 0 && cy >= 0) && (cx <= 10 && cy <= 12))
+        if ((P_X >= 0 && P_Y >= 0) && (P_X <= 10 && P_Y <= 12))
         {
             for (int i = 0; i < 11; i++)
             {
@@ -461,7 +457,7 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
             if (cont == 0)
             {
                 vida = vida - 1;
-                Tablero->TraerMatriz()[cx][cy] = jugador;
+                Tablero->TraerMatriz()[P_X][P_Y] = jugador;
             }
             refresh();
             tecla = getch();
@@ -486,694 +482,469 @@ void Juego(string Nombre, string nombre_escenario, int Vidas)
                 direccion = 4;
             }
             //Crear Bomba
-            else if ( tecla == 122)
+            else if (tecla == 122)
             {
-               // mvprintw(14, 14, "BOMBA");
+                // mvprintw(14, 14, "BOMBA");
                 direccion = 5;
-                
             }
             else
             {
                 direccion = 0;
-                
             }
-                    echo();
-                    if (direccion == 1)
+            echo();
+            if (direccion == 1)
+            {
+                if (P_X - 1 >= 0)
+                {
+                    if (Tablero->TraerMatriz()[P_X - 1][P_Y]->toString() == " ")
                     {
-                        if (cx - 1 >= 0)
+                        Item *temp = Tablero->TraerMatriz()[P_X][P_Y];
+                        Item *temp2 = Tablero->TraerMatriz()[P_X - 1][P_Y];
+                        Tablero->CambiarPosicion(temp2, P_X, P_Y);
+                        Tablero->CambiarPosicion(temp, P_X - 1, P_Y);
+                        P_X = P_X - 1;
+                        Tablero->generarBomba(tipobomba);
+                        if (P_X == 2 && P_Y == 4 && T_escenario == 2)
                         {
-                            if (Tablero->TraerMatriz()[cx - 1][cy]->toString() == " ")
+                            int x, y;
+
+                            if (Temporal != NULL)
                             {
-                                Item *temp = Tablero->TraerMatriz()[cx][cy];
-                                Item *temp2 = Tablero->TraerMatriz()[cx - 1][cy];
-                                Tablero->CambiarPosicion(temp2, cx, cy);
-                                Tablero->CambiarPosicion(temp, cx - 1, cy);
-                                cx = cx - 1;
-                                Tablero->generarBomba(tipobomba);
-                                if(cx==2&&cy==4&&T_escenario==2){
-                                    int x, y;
-                                   
-                                    if (Temporal != NULL)
-                                    {
-                                      //  mvprintw(14, 14, "entro!");
-                                        Item *temp = new Item(5, 2, 4);
-                                        for (int i = 0; i < listapos.size(); i++)
-                                        {
-                                            erase();
-                                            x = getPX(listapos[i]);
-                                            y = getPY(listapos[i]);
-                                            Tablero->TraerMatriz()[x][y] = temp;
-                                            for (int i = 0; i < 11; i++)
-                                            {
-                                                for (int j = 0; j < 13; j++)
-                                                {
-                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                                                    move(i + 1, j + 1);
-                                                    printw("%c", it);
-                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
-                                                }
-                                                usleep(250000);
-                                            }
-                                            refresh();
-                                        }
-                                        erase();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (direccion == 2)
-                    {
-                        if (cy - 1 >= 0)
-                        {
-                            if (Tablero->TraerMatriz()[cx][cy - 1]->toString() == " ")
-                            {
-                                Item *temp = Tablero->TraerMatriz()[cx][cy];
-                                Item *temp2 = Tablero->TraerMatriz()[cx][cy - 1];
-                                Tablero->CambiarPosicion(temp2, cx, cy);
-                                Tablero->CambiarPosicion(temp, cx, cy - 1);
-                                //  mvprintw(5, 5, "moviendo");
-                                moverbots(boot1);
-                                cy = cy - 1;
-                                Tablero->generarBomba(tipobomba);
-                                if (cx == 2 && cy == 4 && T_escenario == 2)
+                                //  mvprintw(14, 14, "entro!");
+                                Item *temp = new Item(5, 2, 4);
+                                for (int i = 0; i < listapos.size(); i++)
                                 {
-                                    int x, y;
-                                  
-                                    if (Temporal != NULL)
+                                    erase();
+                                    x = getPX(listapos[i]);
+                                    y = getPY(listapos[i]);
+                                    Tablero->TraerMatriz()[x][y] = temp;
+                                    for (int i = 0; i < 11; i++)
                                     {
-                                        //  mvprintw(14, 14, "entro!");
-                                        Item *temp = new Item(5, 2, 4);
-                                        for (int i = 0; i < listapos.size(); i++)
+                                        for (int j = 0; j < 13; j++)
                                         {
-                                            erase();
-                                            x = getPX(listapos[i]);
-                                            y = getPY(listapos[i]);
-                                            Tablero->TraerMatriz()[x][y] = temp;
-                                            for (int i = 0; i < 11; i++)
-                                            {
-                                                for (int j = 0; j < 13; j++)
-                                                {
-                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                                                    move(i + 1, j + 1);
-                                                    printw("%c", it);
-                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
-                                                }
-                                                usleep(250000);
-                                            }
-                                            refresh();
+                                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                                            move(i + 1, j + 1);
+                                            printw("%c", it);
+                                            mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                         }
-                                        erase();
+                                        usleep(250000);
                                     }
+                                    refresh();
                                 }
+                                erase();
                             }
                         }
                     }
-                    if (direccion == 3)
+                }
+            }
+            if (direccion == 2)
+            {
+                if (P_Y - 1 >= 0)
+                {
+                    if (Tablero->TraerMatriz()[P_X][P_Y - 1]->toString() == " ")
                     {
-                        if (cy + 1 <= 12)
+                        Item *temp = Tablero->TraerMatriz()[P_X][P_Y];
+                        Item *temp2 = Tablero->TraerMatriz()[P_X][P_Y - 1];
+                        Tablero->CambiarPosicion(temp2, P_X, P_Y);
+                        Tablero->CambiarPosicion(temp, P_X, P_Y - 1);
+                        //  mvprintw(5, 5, "moviendo");
+                        moverbots(boot1);
+                        P_Y = P_Y - 1;
+                        Tablero->generarBomba(tipobomba);
+                        if (P_X == 2 && P_Y == 4 && T_escenario == 2)
                         {
-                            if (Tablero->TraerMatriz()[cx][cy + 1]->toString() == " ")
+                            int x, y;
+
+                            if (Temporal != NULL)
                             {
-                                Item *temp = Tablero->TraerMatriz()[cx][cy];
-                                Item *temp2 = Tablero->TraerMatriz()[cx][cy + 1];
-                                Tablero->CambiarPosicion(temp2, cx, cy);
-                                Tablero->CambiarPosicion(temp, cx, cy + 1);
-                                Tablero->generarBomba(tipobomba);
-                                // mvprintw(5, 5, "moviendo");
-                                moverbots(boot1);
-                                //moverbots(boot2);
-                                /* moverbots(boot3);
+                                //  mvprintw(14, 14, "entro!");
+                                Item *temp = new Item(5, 2, 4);
+                                for (int i = 0; i < listapos.size(); i++)
+                                {
+                                    erase();
+                                    x = getPX(listapos[i]);
+                                    y = getPY(listapos[i]);
+                                    Tablero->TraerMatriz()[x][y] = temp;
+                                    for (int i = 0; i < 11; i++)
+                                    {
+                                        for (int j = 0; j < 13; j++)
+                                        {
+                                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                                            move(i + 1, j + 1);
+                                            printw("%c", it);
+                                            mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
+                                        }
+                                        usleep(250000);
+                                    }
+                                    refresh();
+                                }
+                                erase();
+                            }
+                        }
+                    }
+                }
+            }
+            if (direccion == 3)
+            {
+                if (P_Y + 1 <= 12)
+                {
+                    if (Tablero->TraerMatriz()[P_X][P_Y + 1]->toString() == " ")
+                    {
+                        Item *temp = Tablero->TraerMatriz()[P_X][P_Y];
+                        Item *temp2 = Tablero->TraerMatriz()[P_X][P_Y + 1];
+                        Tablero->CambiarPosicion(temp2, P_X, P_Y);
+                        Tablero->CambiarPosicion(temp, P_X, P_Y + 1);
+                        Tablero->generarBomba(tipobomba);
+                        // mvprintw(5, 5, "moviendo");
+                        moverbots(boot1);
+                        //moverbots(boot2);
+                        /* moverbots(boot3);
                         moverbots(boot4);*/
-                                cy = cy + 1;
-                                if (cx == 2 && cy == 4 && T_escenario == 2)
+                        P_Y = P_Y + 1;
+                        if (P_X == 2 && P_Y == 4 && T_escenario == 2)
+                        {
+                            int x, y;
+
+                            if (Temporal != NULL)
+                            {
+                                //  mvprintw(14, 14, "entro!");
+                                Item *temp = new Item(5, 2, 4);
+                                for (int i = 0; i < listapos.size(); i++)
                                 {
-                                    int x, y;
-                                   
-                                    if (Temporal != NULL)
+                                    erase();
+                                    x = getPX(listapos[i]);
+                                    y = getPY(listapos[i]);
+                                    Tablero->TraerMatriz()[x][y] = temp;
+                                    for (int i = 0; i < 11; i++)
                                     {
-                                        //  mvprintw(14, 14, "entro!");
-                                        Item *temp = new Item(5, 2, 4);
-                                        for (int i = 0; i < listapos.size(); i++)
+                                        for (int j = 0; j < 13; j++)
                                         {
-                                            erase();
-                                            x = getPX(listapos[i]);
-                                            y = getPY(listapos[i]);
-                                            Tablero->TraerMatriz()[x][y] = temp;
-                                            for (int i = 0; i < 11; i++)
-                                            {
-                                                for (int j = 0; j < 13; j++)
-                                                {
-                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                                                    move(i + 1, j + 1);
-                                                    printw("%c", it);
-                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
-                                                }
-                                                usleep(250000);
-                                            }
-                                            refresh();
+                                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                                            move(i + 1, j + 1);
+                                            printw("%c", it);
+                                            mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                         }
-                                        erase();
+                                        usleep(250000);
                                     }
+                                    refresh();
                                 }
+                                erase();
                             }
                         }
                     }
-                    if (direccion == 4)
+                }
+            }
+            if (direccion == 4)
+            {
+                if (P_X + 1 <= 10)
+                {
+                    if (Tablero->TraerMatriz()[P_X + 1][P_Y]->toString() == " ")
                     {
-                        if (cx + 1 <= 10)
+                        Item *temp = Tablero->TraerMatriz()[P_X][P_Y];
+                        Item *temp2 = Tablero->TraerMatriz()[P_X + 1][P_Y];
+                        Tablero->CambiarPosicion(temp2, P_X, P_Y);
+                        Tablero->CambiarPosicion(temp, P_X + 1, P_Y);
+                        Tablero->generarBomba(tipobomba);
+                        P_X = P_X + 1;
+                        if (P_X == 2 && P_Y == 4 && T_escenario == 2)
                         {
-                            if (Tablero->TraerMatriz()[cx + 1][cy]->toString() == " ")
-                            {
-                                Item *temp = Tablero->TraerMatriz()[cx][cy];
-                                Item *temp2 = Tablero->TraerMatriz()[cx + 1][cy];
-                                Tablero->CambiarPosicion(temp2, cx, cy);
-                                Tablero->CambiarPosicion(temp, cx + 1, cy);
-                                Tablero->generarBomba(tipobomba);
-                                cx = cx + 1;
-                                if (cx == 2 && cy == 4 && T_escenario == 2)
-                                {
-                                    int x, y;
-                                  
-                                   
+                            int x, y;
 
-                                    if (Temporal != NULL)
+                            if (Temporal != NULL)
+                            {
+                                //  mvprintw(14, 14, "entro!");
+                                Item *temp = new Item(5, 2, 4);
+                                for (int i = 0; i < listapos.size(); i++)
+                                {
+                                    erase();
+                                    x = getPX(listapos[i]);
+                                    y = getPY(listapos[i]);
+                                    Tablero->TraerMatriz()[x][y] = temp;
+                                    for (int i = 0; i < 11; i++)
                                     {
-                                        //  mvprintw(14, 14, "entro!");
-                                        Item *temp = new Item(5, 2, 4);
-                                        for (int i = 0; i < listapos.size(); i++)
+                                        for (int j = 0; j < 13; j++)
                                         {
-                                            erase();
-                                            x = getPX(listapos[i]);
-                                            y = getPY(listapos[i]);
-                                            Tablero->TraerMatriz()[x][y] = temp;
-                                            for (int i = 0; i < 11; i++)
-                                            {
-                                                for (int j = 0; j < 13; j++)
-                                                {
-                                                    char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                                                    move(i + 1, j + 1);
-                                                    printw("%c", it);
-                                                    mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
-                                                }
-                                                usleep(250000);
-                                            }
-                                            refresh();
+                                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
+                                            move(i + 1, j + 1);
+                                            printw("%c", it);
+                                            mvprintw(14, 20, "MOVIENDO EL CHUCU CHUCU !");
                                         }
-                                        erase();
+                                        usleep(250000);
                                     }
+                                    refresh();
                                 }
-                            }
-                        }
-                    }
-                    if (direccion == 5)
-                    {
-                        mvprintw(14, 20, "BOOMBA!");
-                        crearBomba();
-                        erase();
-                    }
-                }
-            }
-            attroff(COLOR_PAIR(2));
-            move(y / 2, (x / 2 - 4));
-            printw("Lo siento, ha perido....");
-            refresh();
-            usleep(1000000 / 2);
-            curs_set(1);
-        }
-
-        void crearBomba()
-        {
-
-            for (int i = 0; i < 11; i++)
-            {
-                for (int j = 0; j < 13; j++)
-                {
-                    if (Tablero->TraerMatriz()[i][j]->toString() == "*")
-                    {
-                        if (j + 1 <= 12)
-                        {
-                            if (Tablero->TraerMatriz()[i][j + 1]->toString() == " ")
-                            {
-                                if (tipobomba == 1)
-                                {
-                                    Tablero->CambiarPosicion(new Normal(1, i, j + 1, 4), i, j + 1);
-                                }
-                                if (tipobomba == 2)
-                                {
-                                    Tablero->CambiarPosicion(new Espina(1, i, j + 1, 4, 0), i, j + 1);
-                                }
-                                if (tipobomba == 3)
-                                {
-                                    Tablero->CambiarPosicion(new V(1, i, j + 1, 4), i, j + 1);
-                                }
-                                break;
-                            }
-                        }
-                        if (i + 1 <= 10)
-                        {
-                            if (Tablero->TraerMatriz()[i + 1][j]->toString() == " ")
-                            {
-                                if (tipobomba == 1)
-                                {
-                                    Tablero->CambiarPosicion(new Normal(1, i + 1, j, 4), i + 1, j);
-                                }
-                                if (tipobomba == 2)
-                                {
-                                    Tablero->CambiarPosicion(new Espina(1, i + 1, j, 4, 0), i + 1, j);
-                                }
-                                if (tipobomba == 3)
-                                {
-                                    Tablero->CambiarPosicion(new V(1, i + 1, j, 4), i + 1, j);
-                                }
-                                break;
-                            }
-                        }
-                        if (j - 1 >= 0)
-                        {
-                            if (Tablero->TraerMatriz()[i][j - 1]->toString() == " ")
-                            {
-                                if (tipobomba == 1)
-                                {
-                                    Tablero->CambiarPosicion(new Normal(1, i, j - 1, 4), i, j - 1);
-                                }
-                                if (tipobomba == 2)
-                                {
-                                    Tablero->CambiarPosicion(new Espina(1, i, j - 1, 4, 0), i, j - 1);
-                                }
-                                if (tipobomba == 3)
-                                {
-                                    Tablero->CambiarPosicion(new V(1, i, j - 1, 4), i, j - 1);
-                                }
-                                break;
-                            }
-                        }
-                        if (i - 1 >= 0)
-                        {
-                            if (Tablero->TraerMatriz()[i - 1][j]->toString() == " ")
-                            {
-                                if (tipobomba == 1)
-                                {
-                                    Tablero->CambiarPosicion(new Normal(1, i - 1, j, 4), i - 1, j);
-                                }
-                                if (tipobomba == 2)
-                                {
-                                    Tablero->CambiarPosicion(new Espina(1, i - 1, j, 4, 0), i - 1, j);
-                                }
-                                if (tipobomba == 3)
-                                {
-                                    Tablero->CambiarPosicion(new V(1, i - 1, j, 4), i - 1, j);
-                                }
-                                break;
+                                erase();
                             }
                         }
                     }
                 }
             }
+            if (direccion == 5)
+            {
+                mvprintw(14, 20, "BOOMBA!");
+                Tablero->CrearBomba(tipobomba);
+                erase();
+            }
         }
-        int menu2()
-        {
-            erase();
-            initscr();
-            int x, y;
-            getmaxyx(stdscr, y, x);
-            move(0, (x / 2 - 18));
-            if (has_colors())
-            {
-                start_color();
-                init_pair(1, COLOR_WHITE, COLOR_BLACK);
-                attron(COLOR_PAIR(1));
-                printw("<< TIPO DE MENU >>");
-                attroff(COLOR_PAIR(1));
-                init_pair(2, COLOR_CYAN, COLOR_BLACK);
-                attron(COLOR_PAIR(2));
-                move(1, 0);
-                printw("Seleccione el tipo de escenario en el que desea jugar :\n");
-                move(2, 1);
-                printw("1)Invisible. \n");
-                move(3, 1);
-                printw("2) Tren  \n");
-                printw("Tipo de escenario seleccionado: ");
-                attroff(COLOR_PAIR(2));
-            }
-            int cx = 0;
-            int cy = 2;
-            int tecla;
-            move(cy, cx);
-            refresh();
-            while (true)
-            {
-                noecho();
-                tecla = getch();
-                if (tecla == 10)
-                {
-                    if (cy == 2)
-                    {
-                        return 1;
-                    }
-                    if (cy == 3)
-                    {
-                        return 2;
-                    }
-                }
-                else
-                {
-                    //printw("%i",tecla);
-                    if (tecla == 65 && cy > 2)
-                    {
-                        //printw(" arriba");
-                        cy = cy - 1;
-                        move(cy, cx);
-                    }
-                    else if (tecla == 66 && cy <= 4)
-                    {
-                        //printw(" abajo");
-                        cy = cy + 1;
-                        move(cy, cx);
-                    }
-                    else
-                    {
-                        //No hara nada
-                    }
-                }
-                refresh();
-            }
-            echo();
-            return 0;
-        }
-
-        int menu3()
-        {
-            erase();
-            initscr();
-            int x, y;
-            getmaxyx(stdscr, y, x);
-            move(0, (x / 2 - 18));
-            if (has_colors())
-            {
-                start_color();
-                init_pair(1, COLOR_WHITE, COLOR_BLACK);
-                attron(COLOR_PAIR(1));
-                printw("<< TIPO DE BOMBAS >>");
-                attroff(COLOR_PAIR(1));
-                init_pair(2, COLOR_CYAN, COLOR_BLACK);
-                attron(COLOR_PAIR(2));
-                move(1, 0);
-                printw("Seleccione el tipo de Bomba que desea utilizar:\n");
-                move(2, 1);
-                printw("1)Bomba Normal. \n");
-                move(3, 1);
-                printw("2)Bomba Espina \n");
-                move(4, 1);
-                printw("3)Bomba V   \n");
-                printw("Tipo de escenario seleccionado: ");
-                attroff(COLOR_PAIR(2));
-            }
-            int cx = 0;
-            int cy = 2;
-            int tecla;
-            move(cy, cx);
-            refresh();
-            while (true)
-            {
-                noecho();
-                tecla = getch();
-                if (tecla == 10)
-                {
-                    if (cy == 2)
-                    {
-                        return 1;
-                    }
-                    if (cy == 3)
-                    {
-                        return 2;
-                    }
-                    if (cy == 4)
-                    {
-                        return 3;
-                    }
-                }
-                else
-                {
-                    //printw("%i",tecla);
-                    if (tecla == 65 && cy > 2)
-                    {
-                        //printw(" arriba");
-                        cy = cy - 1;
-                        move(cy, cx);
-                    }
-                    else if (tecla == 66 && cy <= 4)
-                    {
-                        //printw(" abajo");
-                        cy = cy + 1;
-                        move(cy, cx);
-                    }
-                    else
-                    {
-                        //No hara nada
-                    }
-                }
-                refresh();
-            }
-            echo();
-            return 0;
-        }
-
-        string menunombre()
-        {
-            erase();
-            initscr();
-            cbreak();
-            echo();
-            string Nombre;
-            int yMax, xMax;
-            getmaxyx(stdscr, yMax, xMax);
-            mvprintw(yMax / 2, 15, "Ingrese su nombre por favor: ");
-            char ch = getch();
-            stringstream ss;
-            while (ch != '\n')
-            {
-                Nombre.push_back(ch);
-                ss << ch;
-                ch = getch();
-            }
-            move(1, 0);
-            noecho();
-            endwin();
-            return Nombre;
-        }
-
-        string menunombre_escenario()
-        {
-            erase();
-            initscr();
-            cbreak();
-            echo();
-            string Nombre;
-            int yMax, xMax;
-            getmaxyx(stdscr, yMax, xMax);
-            mvprintw(yMax / 2, 15, "Ingrese el nombre del escenario: ");
-            char ch = getch();
-            stringstream ss;
-            while (ch != '\n')
-            {
-                Nombre.push_back(ch);
-                ss << ch;
-                ch = getch();
-            }
-            move(1, 0);
-            noecho();
-            endwin();
-            return Nombre;
-        }
-
-        void movertren()
-        {
-            /*
-
-            int x, y;
-            mvprintw(14, 14, "MOVIENDO CHUCU CHUCU");
-           
-            if (Temporal != NULL)
-            {
-                mvprintw(14, 14, "entro!");
-                Item *temp = new Item(5, 2, 4);
-                for (int i = 0; i < listapos.size(); i++)
-                {
-                    erase();
-                    x = getPX(listapos[i]);
-                    y = getPY(listapos[i]);
-                    Tablero->TraerMatriz()[x][y] = temp;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        for (int j = 0; j < 13; j++)
-                        {
-                            char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
-                            move(i + 1, j + 1);
-                            printw("%c", it);
-                        }
-                        usleep(250000);
-                    }
-                    refresh();
-                }
-            }*/
-        }
-
-        int convertirNumero(char le)
-        {
-            int n = 0;
-
-            if (le == '1')
-            {
-                n = 1;
-            }
-            else if (le == '2')
-            {
-                n = 2;
-            }
-            else if (le == '3')
-            {
-                n = 3;
-            }
-            else if (le == '4')
-            {
-                n = 4;
-            }
-            else if (le == '5')
-            {
-                n = 5;
-            }
-            else if (le == '6')
-            {
-                n = 6;
-            }
-            else if (le == '7')
-            {
-                n = 7;
-            }
-            if (le == '8')
-            {
-                n = 8;
-            }
-            else if (le == '9')
-            {
-                n = 9;
-            }
-
-            return n;
-
-        } //Fin de la funcion convertir nuermeo
-
-        int getPX(string palabra)
-        {
-            int x;
-            x = convertirNumero(palabra[0]);
-            return x;
-
-        } //Fin getX
-
-        int getPY(string palabra)
-        {
-            int y = 0;
-            y = convertirNumero(palabra[2]);
-            return y;
-        }
-
-        /*
-boot1->Inteligenciaartificial(boot1->getX(), boot1->getY(), Tablero->TraerMatriz());
-Tablero->TraerMatriz()[boot1->getX()][boot1->getY()];
-int x = boot1->getX();
-int y = boot1->getY();
-bool movimiento = false;
-if (x == 10)
-{
-
-    if (Tablero->TraerMatriz()[x - 1][boot1->getY()]->toString() == " ")
-    {
-        boot1->setX(x - 1);
-        Tablero->TraerMatriz()[x - 1][boot1->getY()] = boot1;
-        movimiento = true;
     }
+    attroff(COLOR_PAIR(2));
+    move(y / 2, (x / 2 - 4));
+    printw("Lo siento, ha perido....");
+    refresh();
+    usleep(1000000 / 2);
+    curs_set(1);
 }
-else if (x == 0)
-{
-    if (Tablero->TraerMatriz()[x + 1][boot1->getY()]->toString() == " ")
-    {
-        boot1->setX(x + 1);
-        Tablero->TraerMatriz()[x + 1][boot1->getY()] = boot1;
-        movimiento = true;
-    }
-}
-else if (x - 1 >= 0)
-{
-    if (Tablero->TraerMatriz()[x - 1][boot1->getY()]->toString() == " ")
-    {
-        boot1->setX(x - 1);
-        Tablero->TraerMatriz()[x - 1][boot1->getY()] = boot1;
-        movimiento = true;
-    }
-}
-else if (x + 1 <= 10)
-{
-    if (Tablero->TraerMatriz()[x + 1][boot1->getY()]->toString() == " ")
-    {
 
-        boot1->setX(x + 1);
-        Tablero->TraerMatriz()[x + 1][boot1->getY()] = boot1;
-        movimiento = true;
-    }
-}
-if (!movimiento)
+int menu2()
 {
-    if (y == 12)
+    erase();
+    initscr();
+    int x, y;
+    getmaxyx(stdscr, y, x);
+    move(0, (x / 2 - 18));
+    if (has_colors())
     {
-
-        if (Tablero->TraerMatriz()[x][boot1->getY() - 1]->toString() == " ")
-        {
-            boot1->setY(y - 1);
-            Tablero->TraerMatriz()[x][y - 1] = boot1;
-        }
+        start_color();
+        init_pair(1, COLOR_WHITE, COLOR_BLACK);
+        attron(COLOR_PAIR(1));
+        printw("<< TIPO DE MENU >>");
+        attroff(COLOR_PAIR(1));
+        init_pair(2, COLOR_CYAN, COLOR_BLACK);
+        attron(COLOR_PAIR(2));
+        move(1, 0);
+        printw("Seleccione el tipo de escenario en el que desea jugar :\n");
+        move(2, 1);
+        printw("1)Invisible. \n");
+        move(3, 1);
+        printw("2) Tren  \n");
+        printw("Tipo de escenario seleccionado: ");
+        attroff(COLOR_PAIR(2));
     }
-    else if (y == 0)
+    int P_X = 0;
+    int P_Y = 2;
+    int tecla;
+    move(P_Y, P_X);
+    refresh();
+    while (true)
     {
-        if (Tablero->TraerMatriz()[x][boot1->getY() + 1]->toString() == " ")
+        noecho();
+        tecla = getch();
+        if (tecla == 10)
         {
-            boot1->setY(y + 1);
-            Tablero->TraerMatriz()[x][y + 1] = boot1;
+            if (P_Y == 2)
+            {
+                return 1;
+            }
+            if (P_Y == 3)
+            {
+                return 2;
+            }
         }
-    }
-    else if (y - 1 >= 0)
-    {
-        if (Tablero->TraerMatriz()[x][boot1->getY() - 1]->toString() == " ")
+        else
         {
-            boot1->setY(y - 1);
-            Tablero->TraerMatriz()[x][y - 1] = boot1;
+            //printw("%i",tecla);
+            if (tecla == 65 && P_Y > 2)
+            {
+                //printw(" arriba");
+                P_Y = P_Y - 1;
+                move(P_Y, P_X);
+            }
+            else if (tecla == 66 && P_Y <= 4)
+            {
+                //printw(" abajo");
+                P_Y = P_Y + 1;
+                move(P_Y, P_X);
+            }
+            else
+            {
+                //No hara nada
+            }
         }
+        refresh();
     }
-    else if (y + 1 <= 12)
-    {
-        if (Tablero->TraerMatriz()[x][boot1->getY() + 1]->toString() == " ")
-        {
-            boot1->setY(y + 1);
-            Tablero->TraerMatriz()[x][y + 1] = boot1;
-        }
-    }
+    echo();
+    return 0;
 }
-*/
 
-        /* int bx = boot1->getX();
-    int by = boot1->getY();
-    boot1->Inteligenciaartificial(bx, by,Tablero->TraerMatriz());
-    int b2x = boot2->getX();
-    int b2y = boot2->getY();
-    boot1->Inteligenciaartificial(bx, by, Tablero->TraerMatriz());
-    int b3x = boot3->getX();
-    int b3y = boot3->getY();
-    boot1->Inteligenciaartificial(bx, by, Tablero->TraerMatriz());
-    int b4x = boot4->getX();
-    int b4y = boot4->getY();
+int menu3()
+{
+    erase();
+    initscr();
+    int x, y;
+    getmaxyx(stdscr, y, x);
+    move(0, (x / 2 - 18));
+    if (has_colors())
+    {
+        start_color();
+        init_pair(1, COLOR_WHITE, COLOR_BLACK);
+        attron(COLOR_PAIR(1));
+        printw("<< TIPO DE BOMBAS >>");
+        attroff(COLOR_PAIR(1));
+        init_pair(2, COLOR_CYAN, COLOR_BLACK);
+        attron(COLOR_PAIR(2));
+        move(1, 0);
+        printw("Seleccione el tipo de Bomba que desea utilizar:\n");
+        move(2, 1);
+        printw("1)Bomba Normal. \n");
+        move(3, 1);
+        printw("2)Bomba Espina \n");
+        move(4, 1);
+        printw("3)Bomba V   \n");
+        printw("Tipo de escenario seleccionado: ");
+        attroff(COLOR_PAIR(2));
+    }
+    int P_X = 0;
+    int P_Y = 2;
+    int tecla;
+    move(P_Y, P_X);
+    refresh();
+    while (true)
+    {
+        noecho();
+        tecla = getch();
+        if (tecla == 10)
+        {
+            if (P_Y == 2)
+            {
+                return 1;
+            }
+            if (P_Y == 3)
+            {
+                return 2;
+            }
+            if (P_Y == 4)
+            {
+                return 3;
+            }
+        }
+        else
+        {
+            if (tecla == 65 && P_Y > 2)
+            {
+                P_Y = P_Y - 1;
+                move(P_Y, P_X);
+            }
+            else if (tecla == 66 && P_Y <= 4)
+            {
+                P_Y = P_Y + 1;
+                move(P_Y, P_X);
+            }
+            else
+            {
+                //No hara nada
+            }
+        }
+        refresh();
+    }
+    echo();
+    return 0;
+}
 
-    Tablero->CambiarPosicion(boot1,boot1->getX(),boot1->getY());
-    Tablero->CambiarPosicion(boot2, boot2->getX(), boot2->getY());
-    Tablero->CambiarPosicion(boot3, boot3->getX(), boot3->getY());
-    Tablero->CambiarPosicion(boot4, boot4->getX(), boot4->getY());*/
+string menunombre()
+{
+    erase();
+    initscr();
+    cbreak();
+    echo();
+    string Nombre;
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+    mvprintw(yMax / 2, 15, "Ingrese su nombre por favor: ");
+    char ch = getch();
+    stringstream ss;
+    while (ch != '\n')
+    {
+        Nombre.push_back(ch);
+        ss << ch;
+        ch = getch();
+    }
+    move(1, 0);
+    noecho();
+    endwin();
+    return Nombre;
+}
+
+string menunombre_escenario()
+{
+    erase();
+    initscr();
+    cbreak();
+    echo();
+    string Nombre;
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+    mvprintw(yMax / 2, 15, "Ingrese el nombre del escenario: ");
+    char ch = getch();
+    stringstream ss;
+    while (ch != '\n')
+    {
+        Nombre.push_back(ch);
+        ss << ch;
+        ch = getch();
+    }
+    move(1, 0);
+    noecho();
+    endwin();
+    return Nombre;
+}
+
+int convertirNumero(char le)
+{
+    int n = 0;
+
+    if (le == '1')
+    {
+        n = 1;
+    }
+    else if (le == '2')
+    {
+        n = 2;
+    }
+    else if (le == '3')
+    {
+        n = 3;
+    }
+    else if (le == '4')
+    {
+        n = 4;
+    }
+    else if (le == '5')
+    {
+        n = 5;
+    }
+    else if (le == '6')
+    {
+        n = 6;
+    }
+    else if (le == '7')
+    {
+        n = 7;
+    }
+    if (le == '8')
+    {
+        n = 8;
+    }
+    else if (le == '9')
+    {
+        n = 9;
+    }
+
+    return n;
+
+} //Fin de la funcion convertir nuermeo
+
+int getPX(string palabra)
+{
+    int x;
+    x = convertirNumero(palabra[0]);
+    return x;
+
+} //Fin getX
+
+int getPY(string palabra)
+{
+    int y = 0;
+    y = convertirNumero(palabra[2]);
+    return y;
+}
+
