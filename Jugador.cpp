@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Jugador::Jugador(int tipoItem,string nombre, int estado, int tipo, int x, int y):Item(tipoItem,x,y)
+Jugador::Jugador(int tipoItem, string nombre, int estado, int tipo, int x, int y) : Item(tipoItem, x, y)
 {
     this->nombre = nombre;
     this->estado = estado;
@@ -53,10 +53,47 @@ Jugador::~Jugador()
 
 string Jugador::toString()
 {
-    if(tipo==1){
-        simbolo="8";
-    }else{
-        simbolo=":";
+    if (tipo == 1)
+    {
+        simbolo = "*";
+    }
+    else
+    {
+        simbolo = "M";
     }
     return simbolo;
 }
+
+void Jugador::Inteligenciaartificial(int x, int y, Item ***Matriz)
+{
+    bool movimiento;
+ 
+    if (x + 1 <= 10)
+    {
+        if (Matriz[x + 1][y]->toString() == " ")
+        {
+            this->setX(x + 1);
+        }
+    }
+    else if (x - 1 >= 0)
+    {
+        if (Matriz[x - 1][y]->toString() == " ")
+        {
+            this->setX(x - 1);
+        }
+    }
+    else if (y + 1 <= 12)
+    {
+        if (Matriz[x][y + 1]->toString() == " ")
+        {
+            this->setY(y + 1);
+        }
+    }
+    else if (y - 1 >= 0)
+    {
+        if (Matriz[x][y - 1]->toString() == " ")
+        {
+            this->setY(y-1);
+        }
+    }
+} //fin del metodo

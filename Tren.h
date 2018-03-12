@@ -16,7 +16,13 @@ class Tren : public Escenario
     vector<string>listapos;
   public:
     Tren(string); /*ale,valor,tipo bomba,string*/
-  //  Tren();
+   Tren(string, int);
+   int convertirNumero(char);
+   int getPX(string);
+   int getPY(string);
+   Item ***MoverTren(Item ***);
+   vector<string> getlistapos();
+   vector<int> getiniciotren();
    ~Tren();
 };
 #endif
