@@ -394,6 +394,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
         mvprintw(0, 25, Nombre.c_str());
         mvprintw(0, 35, "-> Escenario: ");
         mvprintw(0, 49, nombre_escenario.c_str());
+        mvprintw(17, 20, "Instrucciones: Z-> Bombas ; Moverse-> WASD ");
         move(P_Y, P_X);
         if (vida > 0)
         {
@@ -795,8 +796,7 @@ int menu3()
     int tecla;
     move(P_Y, P_X);
     refresh();
-    while (true)
-    {
+    while (true) {
         noecho();
         tecla = getch();
         if (tecla == 10)
