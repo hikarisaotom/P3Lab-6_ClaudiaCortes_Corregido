@@ -67,7 +67,7 @@ string Jugador::toString()
 void Jugador::Inteligenciaartificial(int x, int y, Item ***Matriz)
 {
     bool movimiento;
- 
+
     if (x + 1 <= 10)
     {
         if (Matriz[x + 1][y]->toString() == " ")
@@ -93,7 +93,7 @@ void Jugador::Inteligenciaartificial(int x, int y, Item ***Matriz)
     {
         if (Matriz[x][y - 1]->toString() == " ")
         {
-            this->setY(y-1);
+            this->setY(y - 1);
         }
     }
 } //fin del metodo

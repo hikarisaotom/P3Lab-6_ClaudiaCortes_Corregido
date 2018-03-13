@@ -23,6 +23,6 @@ V::~V()
 
 string V::toString()
 {
-    simbolo="V";
+    simbolo = "V";
     return simbolo;
 }

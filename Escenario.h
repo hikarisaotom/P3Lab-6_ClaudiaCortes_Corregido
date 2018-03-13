@@ -15,26 +15,27 @@ using namespace std;
 
 class Escenario
 {
-  private:
-    string nombre;
-    Item*** Matriz;
-    vector <Bombas *> listaBombas;
-  public:
-    Escenario(string);
-    virtual string getNombre();
-    void CambiarPosicion(Item *, int, int);
-    Item*** TraerMatriz();
-    void CrearBomba(int) ;
-    void generarBomba(int);
-    void Explotar(int,int,int);
-    void V_Explote(int,int);
-    void moverboot();
-    int convertirNumero(char);
-    int getPX(string);
-    int getPY(string);
-    void limpiarTren(vector <string>);
+private:
+  string nombre;
+  Item ***Matriz;
+  vector<Bombas *> listaBombas;
 
-    ~Escenario();
+public:
+  Escenario(string);
+  virtual string getNombre();
+  void CambiarPosicion(Item *, int, int);
+  Item ***TraerMatriz();
+  void CrearBomba(int);
+  void generarBomba(int);
+  void Explotar(int, int, int);
+  void V_Explote(int, int);
+  void moverboot();
+  int convertirNumero(char);
+  int getPX(string);
+  int getPY(string);
+  void limpiarTren(vector<string>);
+
+  ~Escenario();
 };
 
 #endif

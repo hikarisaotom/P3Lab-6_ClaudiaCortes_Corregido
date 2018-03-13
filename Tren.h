@@ -11,18 +11,19 @@ using namespace std;
 
 class Tren : public Escenario
 {
-  private:
-    vector <int> postren;
-    vector<string>listapos;
-  public:
-    Tren(string); /*ale,valor,tipo bomba,string*/
-   Tren(string, int);
-   int convertirNumero(char);
-   int getPX(string);
-   int getPY(string);
-   Item ***MoverTren(Item ***);
-   vector<string> getlistapos();
-   vector<int> getiniciotren();
-   ~Tren();
+private:
+  vector<int> postren;
+  vector<string> listapos;
+
+public:
+  Tren(string); /*ale,valor,tipo bomba,string*/
+  Tren(string, int);
+  int convertirNumero(char);
+  int getPX(string);
+  int getPY(string);
+  Item ***MoverTren(Item ***);
+  vector<string> getlistapos();
+  vector<int> getiniciotren();
+  ~Tren();
 };
 #endif

@@ -208,7 +208,7 @@ void Escenario::CrearBomba(int tipobomba)
     }
 }
 
-void Escenario::Explotar(int i, int j,int tipobomba)
+void Escenario::Explotar(int i, int j, int tipobomba)
 {
     int alcance;
     int Contador;
@@ -217,7 +217,8 @@ void Escenario::Explotar(int i, int j,int tipobomba)
     Espina *BombasE;
     switch (tipobomba)
     {
-    case 1:{
+    case 1:
+    {
         bomba = dynamic_cast<Normal *>(Matriz[i][j]);
         bomba->setContador(bomba->getContador() - 1);
         Contador = bomba->getContador();
@@ -231,21 +232,18 @@ void Escenario::Explotar(int i, int j,int tipobomba)
         BombasE->setContador(BombasE->getContador() - 1);
         alcance = 100;
         Contador = BombasE->getContador();
-         break;
+        break;
     }
     case 3:
     {
-     /*   V *BombaV;
+        /*   V *BombaV;
         BombaV = dynamic_cast<V *>(Matriz[i][j]);
         BombaV->setContador(BombaV->getContador() - 1);
        alcance = 100;
         break;*/
-        V_Explote(i,j);
+        V_Explote(i, j);
     }
-}
-    
-  
-   
+    }
 
     if (Contador == 0)
     {
@@ -287,7 +285,8 @@ void Escenario::Explotar(int i, int j,int tipobomba)
     }
 }
 
-void Escenario::V_Explote(int i, int j){
+void Escenario::V_Explote(int i, int j)
+{
     V *bomba;
     bomba = dynamic_cast<V *>(Matriz[i][j]);
     bomba->setContador(bomba->getContador() - 1);
@@ -299,7 +298,7 @@ void Escenario::V_Explote(int i, int j){
             if ((i - k >= 0) && (j - k >= 0))
             {
                 if (Matriz[i - k][j - k]->toString() != "O")
-                   Matriz[i - k][j - k]=new Item(0, i - k, j - k);
+                    Matriz[i - k][j - k] = new Item(0, i - k, j - k);
             }
             else
             {
@@ -313,7 +312,7 @@ void Escenario::V_Explote(int i, int j){
             {
 
                 if (Matriz[i + k][j + k]->toString() != "O")
-                   Matriz[i + k][j + k]=new Item(0, i + k, j + k);
+                    Matriz[i + k][j + k] = new Item(0, i + k, j + k);
             }
             else
             {
@@ -326,7 +325,7 @@ void Escenario::V_Explote(int i, int j){
             if ((j - k >= 0) && (i + k <= 10))
             {
                 if (Matriz[i + k][j - k]->toString() != "O")
-                  Matriz[i + k][j - k]=new Item(0, i + k, j - k);
+                    Matriz[i + k][j - k] = new Item(0, i + k, j - k);
             }
             else
             {
@@ -339,28 +338,30 @@ void Escenario::V_Explote(int i, int j){
             if ((j + k <= 12) && (i - k >= 0))
             {
                 if (Matriz[i - k][j + k]->toString() != "O")
-                    Matriz[i - k][j + k]=new Item(0, i - k, j + k);
-
+                    Matriz[i - k][j + k] = new Item(0, i - k, j + k);
             }
             else
             {
                 k = 100;
             }
         }
-        Matriz[i][j]=new Item(0, i, j);
+        Matriz[i][j] = new Item(0, i, j);
     }
 }
 
-void Escenario::limpiarTren(vector<string> listapos){
-        for(int i=0;i<listapos.size();i++){
-            int x,y;
-            x = getPX(listapos[i]);
-            y = getPY(listapos[i]);
-            Matriz[x][y] = new Item(0, x, y);
-        }
+void Escenario::limpiarTren(vector<string> listapos)
+{
+    for (int i = 0; i < listapos.size(); i++)
+    {
+        int x, y;
+        x = getPX(listapos[i]);
+        y = getPY(listapos[i]);
+        Matriz[x][y] = new Item(0, x, y);
+    }
 }
 
-void Escenario::moverboot(){
+void Escenario::moverboot()
+{
     for (int cx = 0; cx < 11; cx++)
     {
         for (int cy = 0; cy < 13; cy++)
@@ -374,8 +375,8 @@ void Escenario::moverboot(){
                     {
                         Item *temp = Matriz[cx][cy];
                         Item *temp2 = Matriz[cx - 1][cy];
-                       Matriz[cx][cy]=temp2;
-                      Matriz[cx-1][cy]=temp;
+                        Matriz[cx][cy] = temp2;
+                        Matriz[cx - 1][cy] = temp;
                         cy = 100;
                     }
                     //break;
@@ -386,8 +387,8 @@ void Escenario::moverboot(){
                     {
                         Item *temp = Matriz[cx][cy];
                         Item *temp2 = Matriz[cx][cy + 1];
-                       Matriz[cx][cy]=temp2;
-                        Matriz[cx][cy+1]=temp;
+                        Matriz[cx][cy] = temp2;
+                        Matriz[cx][cy + 1] = temp;
                         cy = 100;
                     }
                     //break;
@@ -398,8 +399,8 @@ void Escenario::moverboot(){
                     {
                         Item *temp = Matriz[cx][cy];
                         Item *temp2 = Matriz[cx][cy - 1];
-                        Matriz[cx][cy]=temp2;
-                       Matriz[cx][cy-1]=temp;
+                        Matriz[cx][cy] = temp2;
+                        Matriz[cx][cy - 1] = temp;
                         cy = 100;
                     }
                     //break;
@@ -410,8 +411,8 @@ void Escenario::moverboot(){
                     {
                         Item *temp = Matriz[cx][cy];
                         Item *temp2 = Matriz[cx + 1][cy];
-                        Matriz[cx][cy]=temp2;
-                       Matriz[cx + 1][cy]=temp;
+                        Matriz[cx][cy] = temp2;
+                        Matriz[cx + 1][cy] = temp;
                         cy = 100;
                     }
                     //break;

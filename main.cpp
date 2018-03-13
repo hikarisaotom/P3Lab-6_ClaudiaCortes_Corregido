@@ -503,8 +503,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                             char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                             move(i + 1, j + 1);
                                             printw("%c", it);
-                                             mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
-                                           
+                                            mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
                                         }
                                         usleep(250000);
                                     }
@@ -559,7 +558,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                             char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                             move(i + 1, j + 1);
                                             printw("%c", it);
-                                             mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
+                                            mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
                                         }
                                         usleep(250000);
                                     }
@@ -613,7 +612,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                             char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                             move(i + 1, j + 1);
                                             printw("%c", it);
-                                             mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
+                                            mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
                                         }
                                         usleep(250000);
                                     }
@@ -665,7 +664,7 @@ void Partida(string Nombre, string nombre_escenario, int Vidas)
                                             char it = Tablero->TraerMatriz()[i][j]->toString().at(0);
                                             move(i + 1, j + 1);
                                             printw("%c", it);
-                                             mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
+                                            mvprintw(14, 20, "MOVIMIENTO DEL CHUUUU! CHUUU!");
                                         }
                                         usleep(250000);
                                     }
@@ -796,7 +795,8 @@ int menu3()
     int tecla;
     move(P_Y, P_X);
     refresh();
-    while (true) {
+    while (true)
+    {
         noecho();
         tecla = getch();
         if (tecla == 10)
